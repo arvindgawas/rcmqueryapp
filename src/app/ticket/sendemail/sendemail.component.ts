@@ -46,7 +46,6 @@ export class SendemailComponent implements OnInit {
 
   onSubmit()
   {
-    console.log(this.email)
     this.TicketService.SendEmail(this.email)
     .subscribe(
       (data) => {
