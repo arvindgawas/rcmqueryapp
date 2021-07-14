@@ -1,0 +1,132 @@
+<div class="row">
+    
+      <div class="col-md-2">
+        <h4>Ticket Dashboard</h4>  
+       </div> 
+        <div class="col-md-2">
+          <a style="margin-top:7px" class="btn btn-info" [routerLink]="['/ticket/ticketcount']"  [queryParams]="{ticketdate:ticketdatefilter|date:'yyyy-MM-dd'}">
+            Dashboard Counts
+          </a>
+        </div>
+       
+    <div class="col-md-2">
+      <h4>Ticket Date Filter</h4>
+    </div>
+    <div class="col-md-2" style="margin-top:7px" >
+      <input type="date" class="form-control"  name="ticketdate" [ngModel]="ticketdatefilter|date:'yyyy-MM-dd'" (ngModelChange)="ticketdatefilter=$event" maxlength="50"
+      #refticketdatefilter="ngModel" id="ticketdatefilter" (ngModelChange)="onFocusOutEvent()">     
+    </div>
+          <div class="col-md-2">
+            <button type="button" style="margin-top:7px;margin-right: 200px;" class="btn btn-info" (click)="ProcessTAT()">ProcessTAT</button>
+          </div>  
+          <div class="col-md-2">
+          <a style="margin-top:7px" class="btn btn-info" [routerLink]="['/ticket/add']">
+            Add Ticket
+          </a>
+        </div>
+  </div>
+  <hr>
+   <div class="row">
+    <div class="col-md-12">
+      <div class="example-header">
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+      </div>
+      <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+            <ng-container matColumnDef="batchno">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Batch no</th>
+              <td mat-cell *matCellDef="let element"> {{element.batchno}} </td>
+            </ng-container>
+              <ng-container matColumnDef="ticketno">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Ticket no</th>
+                  <td mat-cell *matCellDef="let element"> {{element.ticketno}} </td>
+               </ng-container>
+               <ng-container matColumnDef="ticketdate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Ticket Date</th>
+                <td mat-cell *matCellDef="let element"> {{element.ticketdate|date:'dd-MM-yyyy'}} </td>
+                </ng-container>
+                <ng-container matColumnDef="emailsubject">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Email Subject</th>
+                <td mat-cell *matCellDef="let element"> {{element.emailsubject}} </td>
+                </ng-container>
+             
+              <ng-container matColumnDef="tickettype">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Ticket Type </th>
+                <td mat-cell *matCellDef="let element"> {{element.tickettype}} </td>
+              </ng-container>
+              <ng-container matColumnDef="acceptstatus">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Accept Status </th>
+                <td mat-cell *matCellDef="let element"> 
+                   <select style="width: 110px;"   required  class="form-control" name="acceptstatus" #refQuestionBank="ngModel"   [(ngModel)]="element.acceptstatus" (ngModelChange)="edited(element)">
+                    <option value=''>Please select Value</option>
+                    <option value='Accept'>Accept</option>
+                    <option value='Reject'>Reject</option>
+                    <option value='Duplicate'>Duplicate</option>
+                    <option value='MDpulicate'>MDpulicate</option>
+                    <option value='MAccept'>MAccept</option>
+                    <option value='MReject'>MReject</option>
+                </select> 
+                </td>
+              </ng-container> 
+              <ng-container matColumnDef="rejectremark">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Reject Remark</th>
+                <td mat-cell *matCellDef="let element">  
+                  <input type="text" class="form-control"  name="rejectremark" [(ngModel)]="element.rejectremark" (ngModelChange)="edited(element)" >
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="oldbatchno">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Old Batchno</th>
+                <td mat-cell *matCellDef="let element"> {{element.oldbatchno}} </td>
+              </ng-container>
+              <ng-container matColumnDef="assignedto">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Assigned To</th>
+                <td mat-cell *matCellDef="let element"> {{element.assignedto}} </td>
+              </ng-container>
+              <ng-container matColumnDef="bank">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Bank</th>
+                <td mat-cell *matCellDef="let element"> {{element.bank}} </td>
+              </ng-container>
+              <ng-container matColumnDef="pickupcode">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Pickup Code</th>
+                <td mat-cell *matCellDef="let element"> {{element.pickupcode}} </td>
+              </ng-container>
+              <ng-container matColumnDef="clientcode">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Client Code</th>
+                <td mat-cell *matCellDef="let element"> {{element.clientcode}} </td>
+              </ng-container>  
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Query Status</th>
+                <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+              </ng-container>
+              <ng-container matColumnDef="EditAction">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let element"> <a class="btn btn-info" [routerLink]="['/ticket/edit/',element.ticketno]">
+                  <i class="fa fa-edit fa-fw"></i>Edit</a> 
+                </td>
+              </ng-container>
+              <!-- DeleteAction Column -->
+              <ng-container matColumnDef="DeleteAction">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let element">
+                  <button class="btn btn-info" (click)="Delete(element.ticketno)">Delete</button>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="col-md-6"></div>
+      <div class="col-md-6">
+        <button type="submit" style="margin-bottom: 10px;margin-top: 15px" class="btn btn-success" (click)="acceptsubmit()">Submit</button>
+      </div>
+      
+    </div>  
+  </div>
+  

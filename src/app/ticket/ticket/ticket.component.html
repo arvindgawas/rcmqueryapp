@@ -1,0 +1,269 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Edit Ticket</div>
+    <div class="panel-body">
+        <form #f="ngForm" novalidate (ngSubmit)="onSubmit()">
+            <div class="row">
+
+                <div class="col-md-2">
+                    <label for="name">Ticket No</label>
+                    <input type="text"   class="form-control" readonly name="ticketno" [(ngModel)]="ticketmdoel.ticketno" maxlength="50"
+                    #refticketno="ngModel" id="ticketno">
+                </div>
+
+                <div class="col-md-2">
+                    <label for="name">Ticket Date</label>
+                    <input type="datetime" class="form-control" readonly name="ticketdate" [ngModel]="ticketmdoel.ticketdate|date:'dd-MM-yyyy'"  (ngModelChange)="ticketmdoel.ticketdate=$event" maxlength="50"
+                    #refExamName="ngModel" id="ticketdate">
+                </div>
+
+                <div class="col-md-2">
+                    <label for="name">Ticket Time</label>
+                    <input type="time" class="form-control" readonly name="tikcettime" [(ngModel)]="ticketmdoel.tickettime"  maxlength="50"
+                    #refExamName="ngModel" id="tickettime"  >
+                </div>
+
+                <div class="col-md-2">
+                    <label for="name">Query Type</label>
+                    <select required name="querytype" #refQuestionBank="ngModel" class="form-control" [(ngModel)]="ticketmdoel.tickettype" (ngModelChange)="onchangetickettype()">
+                        <option value=''>Please select Value</option>
+                        <option value='CREDIT'>Credit</option>
+                        <option value='PICKUP'>Pickup</option>
+                        <option value='DEPOSITION'>Deposition</option>
+                    </select>
+                </div>
+                <div *ngIf="adminrole; then thenBlock else elseBlock"></div>
+                <ng-template #thenBlock>
+                    <div class="col-md-2">
+                        <label for="name">Assigned To</label>
+                        <select name="assignedto" #refassignedto="ngModel" class="form-control" [(ngModel)]="ticketmdoel.assignedto">    
+                            <option value=''>Please select Value</option>
+                            <option *ngFor="let Userdd of ddlist.Userddlist" [ngValue]="Userdd.ID">
+                                {{Userdd.UserName}}
+                             </option>
+                        </select>
+                    </div>    
+                </ng-template>
+                <ng-template #elseBlock>
+                    <div class="col-md-2">
+                        <label for="name">Assigned To</label>
+                        <input type="text" readonly class="form-control" readonly name="assignedto" [(ngModel)]="ticketmdoel.assignedto" maxlength="50"
+                         #refassignedto="ngModel" id="assignedto">    
+                    </div>
+                </ng-template>
+                <div class="col-md-2">
+                    <label for="name">Accept\Reject Status</label>
+                    <input type="text" readonly class="form-control" readonly name="acceptstatus" [(ngModel)]="ticketmdoel.acceptstatus" maxlength="50"
+                    #refacceptstatus="ngModel" id="acceptstatus">    
+                </div>
+
+            </div>
+
+            <div class="row">
+                
+
+               
+                
+                
+
+                
+                
+            </div>
+
+            <div class="row">
+                
+                
+                <div class="col-md-2">
+                    <label for="name">Batch No</label>
+                    <input type="text" class="form-control" readonly name="batchno" [(ngModel)]="ticketmdoel.batchno" maxlength="50"
+                    #refExamName="ngModel" id="batchno">
+                </div>
+                
+                <div class="col-md-6">
+                    <label for="name">Email Subject</label>
+                    <input type="text" class="form-control"  readonly name="emailsubject" [(ngModel)]="ticketmdoel.emailsubject" maxlength="500"
+                    #refExamName="ngModel" id="emailsubject">
+                </div> 
+                
+                <div class="col-md-4">
+                    <label >Email From</label>
+                    <input type="text" class="form-control" readonly name="emailfrom" [(ngModel)]="ticketmdoel.emailfrom" maxlength="50"
+                    #refExamName="ngModel" id="emailfrom">
+                </div>
+               
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="name">Region</label>
+                    <input type="text" class="form-control" readonly name="region" [(ngModel)]="ticketmdoel.region" maxlength="50"
+                    #refExamName="ngModel" id="region">
+                </div>
+                
+                <div class="col-md-3">
+                    <label for="name">Location</label>
+                    <input type="text" class="form-control" readonly name="location" [(ngModel)]="ticketmdoel.location" maxlength="50"
+                    #refExamName="ngModel" id="location">
+                </div>
+                               
+                <div class="col-md-3">
+                    <label for="name">Hublocation</label>
+                    <input type="text" class="form-control" readonly name="hublocation" [(ngModel)]="ticketmdoel.hublocation" maxlength="50"
+                    #refExamName="ngModel" id="hublocation">
+                </div>
+
+                <div class="col-md-3">
+                    <label for="name">Customer</label>
+                    <input type="text" class="form-control" name="bank" [(ngModel)]="ticketmdoel.bank" maxlength="50"
+                    #refExamName="ngModel" id="bank">
+                </div>
+
+            </div>
+
+
+
+            <div class="row">
+                
+               
+                <div class="col-md-3">
+                    <label for="name">Pickup Code</label>
+                    <input type="text" class="form-control"   name="pickupcode" [(ngModel)]="ticketmdoel.pickupcode" maxlength="50"
+                    #refExamName="ngModel" id="pickupcode">
+                </div>
+                
+                <div class="col-md-3">
+                    <label for="name">Client Code</label>
+                    <input type="text" class="form-control"   name="clientcode" [(ngModel)]="ticketmdoel.clientcode" maxlength="50"
+                    #refExamName="ngModel" id="clientcode" (blur)="onFocusOutEvent($event)">
+                </div>
+
+                <div class="col-md-3">
+                    <label for="name">CRN No</label>
+                    <input type="text" class="form-control" name="crnno" [(ngModel)]="ticketmdoel.crnno" maxlength="50"
+                    #refExamName="ngModel" id="crnno" (blur)="onCrnOutEvent($event)">
+                </div>
+
+                <div class="col-md-3">
+                    <label for="name">Client Name</label>
+                    <input type="text" class="form-control" readonly name="client" [(ngModel)]="ticketmdoel.client" maxlength="50"
+                    #refExamName="ngModel" id="client">
+                </div>
+
+            </div>
+
+            <div class="row">
+                
+                <div class="col-md-3">
+                    <label for="name">Area</label>
+                    <input type="text" class="form-control" readonly name="area" [(ngModel)]="ticketmdoel.area" maxlength="50"
+                    #refExamName="ngModel" id="area">
+                </div>
+                
+                <div class="col-md-3">
+                    <label for="name">Customer Type</label>
+                    <input type="text" class="form-control" readonly name="customertype" [(ngModel)]="ticketmdoel.customertype" maxlength="50"
+                    #refcustomertype="ngModel" id="customertype">
+                </div>
+                
+                <div class="col-md-3">
+                    <label for="name">Hierarchy Code</label>
+                    <input type="text" class="form-control" readonly name="hierarchycode" [(ngModel)]="ticketmdoel.hierarchycode" maxlength="50"
+                    #refhierarchycode="ngModel" id="hierarchycode">
+                </div>
+                
+                <div class="col-md-3">
+                    <label for="name">CDP/NCM</label>
+                    <input type="text" class="form-control" readonly name="cdpncm" [(ngModel)]="ticketmdoel.cdpncm" maxlength="50"
+                    #refExamName="ngModel" id="cdpncm">
+                </div>
+
+                
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-3">
+                    <label for="name">Mistake Done by</label>
+                    <select  name="mistakedoneby" #refQuestionBank="ngModel" class="form-control" [(ngModel)]="ticketmdoel.mistakedoneby">
+                        <option value=''>Please select Value</option>
+                        <option value='Location'>Location</option>
+                        <option value='Customer'>Customer</option>
+                        <option value='HO'>HO</option>
+                        <option value='None'>None</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="name">Type of Error</label>
+                    <select  name="errortype" #referrortype="ngModel" class="form-control" [(ngModel)]="errortype">    
+                        <option value=''>Please select Value</option>
+                        <option *ngFor="let errortype of ddlist.errortypelst" [ngValue]="errortype.ID">
+                            {{errortype.ErrorName}}
+                         </option>
+                    </select>    
+                </div>
+                
+                <div class="col-md-4">
+                    <label for="name">Problem Details</label>
+                    <textarea type="text" name="problem" id="problem" #refproblem="ngModel"  class="form-control" [(ngModel)]="ticketmdoel.problem"></textarea>
+                </div>
+
+                <div class="col-md-2">
+                    <label for="name">Query Status</label>
+                    <select  name="status" #refQuestionBank="ngModel" class="form-control" [(ngModel)]="ticketmdoel.status">
+                        <option value=''>Please select Value</option>
+                        <option value='Open'>Open</option>
+                        <option value='Close'>Close</option>
+                        <option value='Pending'>Pending at Location</option>
+                        <option value='Assigned'>Assigned</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+            <div class="col-md-2">
+                    <label for="name">Download Email Body</label>
+                    <button type="button" (click)="downloadEmailBody(ticketmdoel.emailbody,ticketmdoel.emailbody,ticketmdoel.ticketno)" class="btn btn-link" class="form-control" >  
+                        <span class="fa fa-download"> Download Email Body</span>  
+                    </button>  
+            </div>    
+            
+            <div class="col-md-4">
+                <label for="name">Add New Attachment</label>
+                <input type="file" class="form-control" name="fileupload"  (change)="onFileChange($event)" 
+                id="fileupload">
+            </div>
+
+            <div class="col-md-4">
+                <label for="name">File Path</label>
+                <input type="text" class="form-control" name="filepath" [(ngModel)]="ticketmdoel.filepath"  
+                id="filepath" readonly>  
+            </div>
+
+            <div class="col-md-2">
+                <label for="name">Download File</label>
+                <button type="button" (click)="downloadDocFile(ticketmdoel.filepath,ticketmdoel.filename)" class="btn btn-link" class="form-control" >  
+                    <span class="fa fa-download"> DownloadFile </span>  
+                </button>  
+            </div>    
+        </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" style="margin-top: 10px" [disabled]="!f.form.valid" class="btn btn-success"  >Submit</button>
+                    <a style="margin-left: 10px; margin-top:7px;" class="btn btn-info" [routerLink]="['/ticket/all']">
+                        All Tickets 
+                    </a>
+                    <a style="margin-left: 10px; margin-top:7px;" [ngClass]="errorexist == false ? 'disabled' : ''" class="btn btn-info" [routerLink]="['/ticket/details',ticketmdoel.ticketno]">
+                        Ticket Details 
+                    </a>
+                    <a style="margin-left: 10px; margin-top:7px;" class="btn btn-info" [routerLink]="['/ticket/sendemail']" [queryParams]="{subject:ticketmdoel.emailsubject,ticketno:ticketmdoel.ticketno,emailbody:ticketmdoel.emailbody}">
+                        Send Email to Bank/Location 
+                    </a>
+                </div>
+            </div>
+
+        </form>    
+    </div>
+</div>

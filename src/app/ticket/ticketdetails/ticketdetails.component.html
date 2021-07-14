@@ -1,0 +1,146 @@
+    <br>
+    <div>Ticket Details
+        <label>Ticket No : </label>
+        <input type="text"   name="ticketno" [(ngModel)]="Id" maxlength="50"
+        #refcrnno="ngModel" id="ticketno" readonly >
+    </div>
+    <br>
+    <form #f="ngForm" novalidate (ngSubmit)="onSubmit()">
+        <table>
+            <tr>
+                    <th>
+                        CRN No
+                    </th>
+                    <th >
+                        Pickup Date
+                    </th>
+                    <th style="width: 110px;">
+                        Actual Client Code
+                    </th>
+                    <th style="width: 110px;">
+                        Wrong Client Code
+                    </th>
+                    <th style="width: 110px;">
+                        Actual Pickup Code
+                    </th>
+                    <th style="width: 110px;">
+                        Wrong Pickup Code
+                    </th>
+                    <th>
+                        Actual CUC
+                    </th>
+                    <th>
+                        Wrong CUC
+                    </th>
+                    <th>
+                        Actual Hcin
+                    </th>
+                    <th>
+                        Wrong Hcin
+                    </th>
+                    <th>
+                        Actual DIS-PIS
+                    </th>
+                    <th>
+                        Wrong DIS-PIS
+                    </th>
+                    <th>
+                        Actual Amt
+                    </th>
+                    <th>
+                        Wrong Amt
+                    </th>
+                    <th>
+                        Sole Id
+                    </th>
+                    <th>
+                        Bank Branch Location
+                    </th>
+                    <th>
+                        Deposition Date
+                    </th>
+             </tr>
+             <tr *ngFor="let ticketdetails of listtd;let index = index;">
+                        <td>
+                            <input style="width: 90px;" type="text"   name="crnno-{{index}}" [(ngModel)]="ticketdetails.crnno" maxlength="50"
+                            #refcrnno="ngModel" id="crnno" readonly>
+                        </td>
+                        <td>
+                            <input style="width: 150px;" type="date"  name="pickupdate-{{index}}"  [ngModel]="ticketdetails.pickupdate|date:'yyyy-MM-dd'" (ngModelChange)="ticketdetails.pickupdate=$event" maxlength="50"
+                            #refpickupdate="ngModel"  id="pickupdate" >
+                        </td>
+                        <td>
+                            <input style="width: 110px;" type="text"  name="clientcode-{{index}}" [(ngModel)]="ticketdetails.clientcode" maxlength="50"
+                            #refclientcode="ngModel" id="clientcode" >
+                        </td>
+                        <td>
+                            <input style="width: 110px;" type="text"  name="wrongclientcode-{{index}}" [(ngModel)]="ticketdetails.wrongclientcode" maxlength="50"
+                            #refwrongclientcode="ngModel" id="wrongclientcode" >
+                        </td>
+                        <td>
+                            <input style="width: 110px;" type="text"  name="pickupcode-{{index}}" [(ngModel)]="ticketdetails.pickupcode" maxlength="50"
+                            #refpickupcode="ngModel" id="pickupcode" >
+                        </td>
+                        <td>
+                            <input style="width: 110px;" type="text"  name="wrongpickupcode-{{index}}" [(ngModel)]="ticketdetails.wrongpickupcode" maxlength="50"
+                            #refwrongpickupcode="ngModel" id="wrongpickupcode" >
+                        </td>
+                        <td>
+                            <input style="width: 110px;" type="text"  name="customeruniquecode-{{index}}" [(ngModel)]="ticketdetails.customeruniquecode" maxlength="50"
+                            #refcustomeruniquecode="ngModel" id="customeruniquecode" >
+                        </td>
+                        <td>
+                            <input style="width: 110px;" type="text"  name="wrongcustomeruniquecode-{{index}}" [(ngModel)]="ticketdetails.wrongcustomeruniquecode" maxlength="50"
+                            #refwrongcustomeruniquecode="ngModel" id="wrongcustomeruniquecode" >
+                        </td>
+                        <td>
+                            <input style="width: 110px;" type="text"  name="actualhcin-{{index}}" [(ngModel)]="ticketdetails.actualhcin" maxlength="50"
+                            #refwronghcin="ngModel" id="actualhcin" >
+                        </td>
+                        <td>
+                            <input style="width: 110px;" type="text"  name="wronghcin-{{index}}" [(ngModel)]="ticketdetails.wronghcin" maxlength="50"
+                            #refwronghcin="ngModel" id="wronghcin" >
+                        </td>
+                        <td>
+                            <input style="width: 110px;" type="text"  name="actualdispis-{{index}}" [(ngModel)]="ticketdetails.actualdispis" maxlength="50"
+                            #refactualdispis="ngModel" id="actualdispis" >
+                        </td>
+                        <td>
+                            <input style="width: 110px;" type="text"  name="wrongdispis-{{index}}" [(ngModel)]="ticketdetails.wrongdispis" maxlength="50"
+                            #refwrongdispis="ngModel" id="wrongdispis" >
+                        </td>
+                        <td>
+                            <input style="width: 110px;" type="text"  name="actualamt-{{index}}" [(ngModel)]="ticketdetails.actualamt" maxlength="50"
+                            #refactualamt="ngModel" id="actualamt" >
+                        </td>
+                        <td>
+                            <input style="width: 110px;" type="text"  name="wrongamt-{{index}}" [(ngModel)]="ticketdetails.wrongamt" maxlength="50"
+                            #refwrongamt="ngModel" id="wrongamt" >     
+                        </td>
+                        <td>
+                            <input style="width: 110px;" type="text"  name="soleid-{{index}}" [(ngModel)]="ticketdetails.soleid" maxlength="50"
+                            #refsoleid="ngModel" id="soleid" >
+                        </td>
+                        <td>
+                            <input style="width: 110px;" type="text"  name="bankbranchlocation-{{index}}" [(ngModel)]="ticketdetails.bankbranchlocation" maxlength="50"
+                            #refbankbranchlocation="ngModel" id="bankbranchlocation" >
+                        </td>
+                        <td>
+                            <input style="width: 150px;" type="date"  name="depositiondate-{{index}}" [ngModel]="ticketdetails.depositiondate|date:'yyyy-MM-dd'" (ngModelChange)="ticketdetails.depositiondate=$event" maxlength="50"
+                            #refdepositiondate="ngModel"  id="depositiondate" >
+                        </td>
+                </tr>
+            </table>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit"   style="margin-left: 10px;margin-top: 10px;margin-bottom: 10px" [disabled]="!f.form.valid" class="btn btn-success"  >Submit</button>
+                    <button type="button"  style="margin-left: 10px;margin-top: 10px;margin-bottom: 10px" class="btn btn-info" (click)="addrow()">Add Row</button>
+                    <a style="margin-left: 10px; margin-top:10px;margin-bottom: 10px" class="btn btn-info" [routerLink]="['/ticket/all']">
+                        Ticket Dashboard 
+                    </a>
+                </div>
+            </div>
+
+
+        </form>    

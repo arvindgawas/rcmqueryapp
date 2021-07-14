@@ -1,0 +1,105 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Ticket Tracker Report</div>
+    <div class="panel-body">
+        <form #f="ngForm" novalidate (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="name">From Date</label>
+                    <input type="date" class="form-control" name="fromdate" [ngModel]="report.fromdate|date:'yyyy-MM-dd'" 
+                    id="fromdate" (ngModelChange)="report.fromdate=$event" required>
+                </div>
+
+                <div class="col-md-2">
+                    <label for="name">To Date</label>
+                    <input type="date" class="form-control" name="todate" [ngModel]="report.todate|date:'yyyy-MM-dd'" 
+                    id="todate" (ngModelChange)="report.todate=$event" required>
+                </div>
+
+                <div class="col-md-2">
+                    <label for="name">User</label>
+                    <select name="user"  class="form-control" [(ngModel)]="report.user">    
+                        <option value=''>Please select Value</option>
+                        <option *ngFor="let Userdd of ddlisttracker.Userlst" [ngValue]="Userdd.ID">
+                            {{Userdd.UserName}}
+                         </option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label for="name">Region</label>
+                    <input type="text" class="form-control" name="region" [(ngModel)]="report.region" 
+                    id="region" >
+                </div>
+
+                <div class="col-md-2">
+                    <label for="name">Location</label>
+                    <input type="text" class="form-control" name="location" [(ngModel)]="report.location" 
+                    id="location" >
+                </div>
+
+                <div class="col-md-2">
+                    <label for="name">HubLocation</label>
+                    <input type="text" class="form-control" name="hublocation" [(ngModel)]="report.hublocation" 
+                    id="hublocation" >
+                </div>
+
+            </div>
+
+            <div class="row">
+                
+                <div class="col-md-2">
+                    <label for="name">Customer</label>
+                    <select name="customer"  class="form-control" [(ngModel)]="report.customer">    
+                        <option value=''>Please select Value</option>
+                        <option *ngFor="let Userdd of ddlisttracker.customerlst" [ngValue]="Userdd.ID">
+                            {{Userdd.Name}}
+                         </option>
+                    </select>
+
+                </div>
+
+                <div class="col-md-2">
+                    <label for="name">Customer Type</label>
+                    <input type="text" class="form-control" name="customertype" [(ngModel)]="report.customertype" 
+                    id="customertype" >
+                </div>
+
+                <div class="col-md-2">
+                    <label for="name">CDP/NCM</label>
+                    <select required name="cdpncm" class="form-control" [(ngModel)]="report.cdpncm" >
+                        <option value=''>Please select Value</option>
+                        <option value='CDP'>CDP</option>
+                        <option value='NCM'>NCM</option>
+                        <option value='DEPOSITION'>Deposition</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label for="name">Issue Type</label>
+                    <select required name="issuetype" class="form-control" [(ngModel)]="report.issuetype" >
+                        <option value=''>Please select Value</option>
+                        <option value='CREDIT'>Credit</option>
+                        <option value='PICKUP'>Pickup</option>
+                        <option value='DEPOSITION'>Deposition</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label for="name">SLA</label>
+                    <input type="text" class="form-control" name="issuetype" [(ngModel)]="report.sla" 
+                    id="sla" >    
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <button type="button"  style="margin-top: 10px" (click)="downloadExcelFile()" class="btn btn-link" class="btn btn-success" >  
+                        <span class="fa fa-download"> Download Report</span>  
+                    </button>
+                </div>
+            </div>
+            
+        </form>   
+    </div>
+</div>
+

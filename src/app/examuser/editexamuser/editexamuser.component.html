@@ -1,0 +1,117 @@
+<h4>User Master</h4>
+<hr>
+<div class="panel panel-default">
+    <div class="panel-heading">Edit User</div>
+    <div class="panel-body">
+        <form #f="ngForm" novalidate (ngSubmit)="onSubmit()">
+            <div class="row">
+
+                <div class="col-md-4">
+
+                    <label >User Id</label>
+
+                    <input type="text" class="form-control" name="UserId" [(ngModel)]="user.UserId" maxlength="20"
+                    #refUsderId="ngModel" id="UserId" required>
+
+                    <div *ngIf="!refUsderId.valid  && (refUsderId.dirty || refUsderId.touched)" class="alert alert-danger">
+                        <div [hidden]="!refUsderId.errors.required">
+                            User Id is required
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <label for="name">User Name</label>
+
+                    <input type="text" class="form-control" name="UserName" [(ngModel)]="user.UserName" maxlength="20"
+                    #refUsderUserName="ngModel" id="UserName" required>
+
+                    <div *ngIf="!refUsderUserName.valid  && (refUsderUserName.dirty || refUsderUserName.touched)" class="alert alert-danger">
+                        <div [hidden]="!refUsderUserName.errors.required">
+                            User Name is required
+                        </div>
+                    </div>
+
+                </div>
+                
+
+		        <div class="col-md-4">
+                    
+                        <label for="name">User Password</label>
+    
+                        <input type="password" class="form-control" name="Passsword" [(ngModel)]="user.UserPass" maxlength="50"
+                        #refPasssword="ngModel" id="Passsword" required>
+    
+                        <div *ngIf="!refPasssword.valid  && (refPasssword.dirty || refPasssword.touched)" class="alert alert-danger">
+                            <div [hidden]="!refPasssword.errors.required">
+                                Password is required
+                            </div>
+                        </div>
+    
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+
+                    <label for="name">User Role</label>
+
+                    <select required name="UserRole" #refUserRole="ngModel" class="form-control" [(ngModel)]="user.UserRole">
+                        <option value=''>Please select Value</option>
+                        <option value='user'>App User</option>
+                        <option value='admin'>Admin</option>
+                    </select>
+
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="name">Bank</label>
+                </div>
+                <div class="col-md-2">
+                    <label for="name">Query Type</label>
+                </div>
+                <div class="col-md-2">
+                    <label for="name">Priority</label>
+                </div>    
+            </div>        
+            <div *ngFor="let userbankmap of lstuserbankmap;let index = index;">
+                <div class="row">
+                    <div class="col-md-2">
+                        <input class="form-control" type="text"   name="Bank-{{index}}" [(ngModel)]="userbankmap.Bank" maxlength="50"
+                        #refbank="ngModel" readonly>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" type="text"   name="QueryType-{{index}}" [(ngModel)]="userbankmap.QueryType" maxlength="50"
+                        #refQueryType="ngModel" readonly>
+                    </div>
+                    <div class="col-md-2">
+                        <select  class="form-control" name="UserPriority-{{index}}"  #refUserPriority="ngModel" class="form-control" [(ngModel)]="userbankmap.UserPriority" (ngModelChange)="ValidatePriorityUser(userbankmap,user.UserId)">    
+                            <option value=''>Please select Value</option>
+                            <option ngValue="1">
+                                Priority 1
+                             </option>
+                             <option ngValue="2">
+                                Priority 2
+                             </option>
+                        </select>
+                    </div>
+                </div>            
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <button type="submit" style="margin-top: 10px" [disabled]="!f.form.valid" class="btn btn-success"  >Submit</button>
+                    <a style="margin-left: 10px; margin-top:7px;" class="btn btn-info" [routerLink]="['/userexam/']">
+                        All Users 
+                    </a>
+                </div>
+            </div>
+
+        </form>    
+    </div>
+</div>

@@ -1,0 +1,125 @@
+<br>
+<div>Send Email to Bank/Location
+    <label>Ticket No : </label>
+    <input type="text"   name="ticketno" [(ngModel)]="email.ticketno" maxlength="50"
+    #refticketno="ngModel" id="ticketno" readonly >
+</div>
+<hr>
+<div class="panel panel-default">
+    <div class="panel-heading">Send Email</div>
+    <div class="panel-body">
+        <form #f="ngForm" novalidate (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-md-4">
+
+                    <label for="name">To Email ID</label>
+
+                    <input type="text" class="form-control" name="toemailid" [(ngModel)]="email.toemailid" maxlength="200"
+                    #reftoemailid="ngModel" id="toemailid" required>
+
+                    <div *ngIf="!reftoemailid.valid  && (reftoemailid.dirty || reftoemailid.touched)" class="alert alert-danger">
+                        <div [hidden]="!reftoemailid.errors.required">
+                        To Email Id is required
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+
+                    <label for="name">CC Email ID</label>
+
+                    <input type="text" class="form-control" name="ccemailid" [(ngModel)]="email.ccemailid" maxlength="200"
+                    #refccemailid="ngModel" id="ccemailid" >
+                   
+                </div>
+
+                <div class="col-md-4">
+
+                    <label for="name">Email Subject</label>
+
+                    <input type="text" class="form-control" name="emailsubject1" [(ngModel)]="email.emailsubject1" maxlength="1000"
+                    #refemailsubject1="ngModel" id="emailsubject1" required>
+                   
+                    <div *ngIf="!refemailsubject1.valid  && (refemailsubject1.dirty || refemailsubject1.touched)" class="alert alert-danger">
+                        <div [hidden]="!refemailsubject1.errors.required">
+                        Email Subject is required
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-12">
+
+                    <label for="name">Email Body</label>
+
+                    <textarea required type="text" name="emailbody" id="emailbody" #refemailbody="ngModel"  class="form-control" mdbInput [(ngModel)]="email.emailbody"></textarea>
+                
+                    <div *ngIf="!refemailbody.valid  && (refemailbody.dirty || refemailbody.touched)" class="alert alert-danger">
+                        <div [hidden]="!refemailbody.errors.required">
+                        Email Body is required
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <button type="submit" style="margin-top: 10px" [disabled]="!f.form.valid" class="btn btn-success"  >Submit</button>
+                </div>
+            </div>
+        </form>   
+        <br>
+        <div>
+            <div class="row">
+                <div class="col-md-2">
+                    To Email ID
+                </div>
+                <div class="col-md-2">
+                    Email Sent Date
+                </div>
+                <div class="col-md-2">
+                    CC Email ID
+                </div>
+                <div class="col-md-3">
+                    Subject                
+                </div>
+                <div class="col-md-3">
+                    Email Body                
+                </div>
+            </div>
+        </div>
+        <div *ngFor="let email of lstemail;let index = index;">
+            <div class="row">
+                <div class="col-md-2">
+                    <input class="form-control" type="text"   name="toemailid-{{index}}" [(ngModel)]="email.toemailid" maxlength="50"
+                    #reftoemailid="ngModel" readonly>
+                </div>
+                <div class="col-md-2">
+                    <input class="form-control" type="text"   name="sentdate-{{index}}" [ngModel]="email.sentdate|date:'dd-MM-yyyy'"  (ngModelChange)="email.sentdate=$event" maxlength="50"
+                    #refsentdate="ngModel" readonly>
+                </div>
+
+                <div class="col-md-2">
+                    <input class="form-control" type="text"   name="ccemailid-{{index}}" [(ngModel)]="email.ccemailid" maxlength="50"
+                    #refccemailid="ngModel" readonly>
+                </div>
+                <div class="col-md-3">
+                    <input class="form-control" type="text"   name="Subject-{{index}}" [(ngModel)]="email.emailsubject1" maxlength="50"
+                    #refSubject="ngModel" readonly>
+                </div>
+                <div class="col-md-3">
+                    <input class="form-control" type="text"   name="emailbody-{{index}}" [(ngModel)]="email.emailbody" maxlength="50"
+                    #refemailbody="ngModel" readonly>
+                </div>
+            </div>            
+        </div>
+
+    </div>
+</div>
+
