@@ -32,6 +32,7 @@ export class ticketmdoel
     public status:string;
     public filepath:string;
     public filename:string;
+    public SendAutoCloseResponse:string='N';
     public createduser :string;
     public createddate :Date;
     public modifieduser :string;

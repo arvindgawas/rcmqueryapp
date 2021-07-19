@@ -3,72 +3,116 @@
     <div class="panel-body">
         <form #f="ngForm" novalidate >
             <div class="row">
-                <div class="col-md-2">
-                    <label for="name">Bank</label>
-                </div>
-                <div class="col-md-2">
-                    <label for="name">User</label>
-                </div>
-                <div class="col-md-1">
-                    <label for="name">Open</label>
-                </div>
-                <div class="col-md-1">
-                    <label for="name">Accepted</label>
-                </div>
-                <div class="col-md-1">
-                    <label for="name">Duplicate</label>
-                </div>
-                <div class="col-md-1">
-                    <label for="name">Rejected</label>
-                </div>
-                <div class="col-md-1">
-                    <label for="name">Closed</label>
-                </div>
-                <div class="col-md-1">
-                    <label for="name">Pending</label>
-                </div>
-                <div class="col-md-1">
-                    <label for="name">Total</label>
-                </div>    
+                <div *ngIf="adminrole; then thenBlock else elseBlock"></div>
+                <ng-template #thenBlock>
+                    <div class="col-md-2">
+                        <label for="name">Bank</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="name">User</label>
+                    </div>
+                    <div class="col-md-1">
+                        <label for="name">Open</label>
+                    </div>
+                    <div class="col-md-1">
+                        <label for="name">Accepted</label>
+                    </div>
+                    <div class="col-md-1">
+                        <label for="name">Duplicate</label>
+                    </div>
+                    <div class="col-md-1">
+                        <label for="name">Rejected</label>
+                    </div>
+                    <div class="col-md-1">
+                        <label for="name">Closed</label>
+                    </div>
+                    <div class="col-md-1">
+                        <label for="name">Pending</label>
+                    </div>
+                    <div class="col-md-1">
+                        <label for="name">Total</label>
+                    </div> 
+                    <div class="row" *ngFor="let ticketcount of lstticketcount;let index = index;">
+                        <div class="col-md-2">
+                            <input class="form-control" type="text"   name="bank-{{index}}" [(ngModel)]="ticketcount.bank" maxlength="50"
+                             readonly>
+                        </div>
+                        <div class="col-md-2">
+                             <input class="form-control" type="text"   name="userid-{{index}}" [(ngModel)]="ticketcount.userid" maxlength="50"
+                                readonly>
+                        </div>
+                        <div class="col-md-1">
+                            <input class="form-control" type="text"   name="opencount-{{index}}" [(ngModel)]="ticketcount.opencount" maxlength="50"
+                            readonly>
+                        </div>
+                        <div class="col-md-1">
+                            <input class="form-control" type="text"   name="acceptcount-{{index}}" [(ngModel)]="ticketcount.acceptcount" maxlength="50"
+                             readonly>
+                        </div>
+                        <div class="col-md-1">
+                                    <input class="form-control" type="text"   name="duplicatecount-{{index}}" [(ngModel)]="ticketcount.duplicatecount" maxlength="50"
+                                     readonly>
+                        </div>
+                        <div class="col-md-1">
+                                    <input class="form-control" type="text"   name="rejectcount-{{index}}" [(ngModel)]="ticketcount.rejectcount" maxlength="50"
+                                    readonly>
+                        </div>
+                        <div class="col-md-1">
+                                    <input class="form-control" type="text"   name="closecount-{{index}}" [(ngModel)]="ticketcount.closecount" maxlength="50"
+                                     readonly>
+                        </div>
+                        <div class="col-md-1">
+                            <input class="form-control" type="text"   name="pendingcount-{{index}}" [(ngModel)]="ticketcount.pendingcount" maxlength="50"
+                             readonly>
+                        </div>
+                        <div class="col-md-1">
+                            <input class="form-control" type="text"   name="totalcount-{{index}}" [(ngModel)]="ticketcount.totalcount" maxlength="50"
+                             readonly>
+                        </div>
+                    </div>   
+                </ng-template>
+                <ng-template #elseBlock>
+                    <div class="row">
+                    <div class="col-md-2">
+                        <label for="name">Bank</label>
+                    </div>
+                    <div class="col-md-1">
+                        <label for="name">Open</label>
+                    </div>
+                    <div class="col-md-1">
+                        <label for="name">Accepted</label>
+                    </div>
+                    <div class="col-md-1">
+                        <label for="name">Pending</label>
+                    </div>
+                    <div class="col-md-1">
+                        <label for="name">Total</label>
+                    </div> 
+                    </div>
+                    <div class="row" *ngFor="let ticketcount of lstticketcount;let index = index;">
+                        <div class="col-md-2">
+                            <input class="form-control" type="text"   name="bank-{{index}}" [(ngModel)]="ticketcount.bank" maxlength="50"
+                             readonly>
+                        </div>
+                        <div class="col-md-1">
+                            <input class="form-control" type="text"   name="opencount-{{index}}" [(ngModel)]="ticketcount.opencount" maxlength="50"
+                            readonly>
+                        </div>
+                        <div class="col-md-1">
+                            <input class="form-control" type="text"   name="acceptcount-{{index}}" [(ngModel)]="ticketcount.acceptcount" maxlength="50"
+                             readonly>
+                        </div>
+                        <div class="col-md-1">
+                            <input class="form-control" type="text"   name="pendingcount-{{index}}" [(ngModel)]="ticketcount.pendingcount" maxlength="50"
+                             readonly>
+                        </div>
+                        <div class="col-md-1">
+                            <input class="form-control" type="text"   name="totalcount-{{index}}" [(ngModel)]="ticketcount.totalcount" maxlength="50"
+                             readonly>
+                        </div>
+                    </div>   
+                </ng-template>   
             </div> 
-            <div class="row" *ngFor="let ticketcount of lstticketcount;let index = index;">
-                <div class="col-md-2">
-                    <input class="form-control" type="text"   name="bank-{{index}}" [(ngModel)]="ticketcount.bank" maxlength="50"
-                     readonly>
-                </div>
-                <div class="col-md-2">
-                    <input class="form-control" type="text"   name="userid-{{index}}" [(ngModel)]="ticketcount.userid" maxlength="50"
-                    readonly>
-                </div>
-                <div class="col-md-1">
-                    <input class="form-control" type="text"   name="opencount-{{index}}" [(ngModel)]="ticketcount.opencount" maxlength="50"
-                    readonly>
-                </div>
-                <div class="col-md-1">
-                    <input class="form-control" type="text"   name="acceptcount-{{index}}" [(ngModel)]="ticketcount.acceptcount" maxlength="50"
-                     readonly>
-                </div>
-                <div class="col-md-1">
-                    <input class="form-control" type="text"   name="duplicatecount-{{index}}" [(ngModel)]="ticketcount.duplicatecount" maxlength="50"
-                     readonly>
-                </div>
-                <div class="col-md-1">
-                    <input class="form-control" type="text"   name="rejectcount-{{index}}" [(ngModel)]="ticketcount.rejectcount" maxlength="50"
-                    readonly>
-                </div>
-                <div class="col-md-1">
-                    <input class="form-control" type="text"   name="closecount-{{index}}" [(ngModel)]="ticketcount.closecount" maxlength="50"
-                     readonly>
-                </div>
-                <div class="col-md-1">
-                    <input class="form-control" type="text"   name="pendingcount-{{index}}" [(ngModel)]="ticketcount.pendingcount" maxlength="50"
-                     readonly>
-                </div>
-                <div class="col-md-1">
-                    <input class="form-control" type="text"   name="totalcount-{{index}}" [(ngModel)]="ticketcount.totalcount" maxlength="50"
-                     readonly>
-                </div>
-            </div>    
         </form>    
     </div>
 </div>

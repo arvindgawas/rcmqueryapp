@@ -58,10 +58,7 @@ export class TicketComponent implements OnInit {
          this.errortype =  Number(this.ticketmdoel.errortype);
          if (this.errortype >0)
          {
-             if (this.ticketmdoel.tickettype=="CREDIT")
-             {
-                this.errorexist = true;
-             }
+             this.errorexist = true;
              console.log("errortyp");
              console.log(this.errorexist);
          } 
@@ -191,9 +188,17 @@ onSubmit()
         this._router.navigate(['/ticket/all']);
         return;
      } 
+
     this.ticketmdoel.errortype= this.errortype;
-    console.log(55555);
     console.log(this.ticketmdoel);
+
+    this.ticketmdoel.SendAutoCloseResponse='N';
+
+    if (confirm("Do You want to Send Auto Close Response?")) 
+    {
+        this.ticketmdoel.SendAutoCloseResponse='Y';
+    } 
+
     this.TicketService.UpdateTicket(this.ticketmdoel)
     .subscribe(
       (data) => {

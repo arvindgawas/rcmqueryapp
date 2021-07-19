@@ -8,10 +8,11 @@ import { MatAutocomplete, MatAutocompleteModule } from '@angular/material/autoco
 import { MatSortModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatSnackBar, MatSnackBarConfig, MatSnackBarModule } from '@angular/material';
 import {
   MatButtonModule, MatNativeDateModule, MatIconModule, MatSidenavModule, MatListModule, MatToolbarModule, MatMenuModule } from '@angular/material';
+import { ForgotpassComponent } from './forgotpass/forgotpass.component';
 
 
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, ForgotpassComponent],
   imports: [
     LoginRoutingModule,
     CommonModule,

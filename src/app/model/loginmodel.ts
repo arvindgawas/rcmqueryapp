@@ -1,7 +1,6 @@
 export class LoginModel
 {
-    public Username: string = "";
+    public UserId: string = "";
     public Password: string = "";
-    public questcount: number;
-    public NoofQuestPerPage: number;
+    public Confirmpassword : string;
 }

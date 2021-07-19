@@ -6,6 +6,7 @@ import { environment } from '../environments/environment';
 import { ticketmdoel } from './model/ticketmodel';
 import { rcmdetail } from './model/rcmdetail';
 import { ticketcount } from './model/ticketcount';
+import { LoginModel} from './model/loginmodel';
 import { user } from './model/user';
 import { email } from './model/email';
 import { ticketdetails} from './model/ticketdetails';
@@ -265,6 +266,18 @@ export class TicketService {
   {
 
     let url= environment.apiEndpoint + "UserMaster/UpdateUser/";
+     console.log(888899999);
+     console.log(objuser);
+      return this.http.post<any>(url, objuser).pipe(tap(data => data),
+              catchError(this.handleError)
+              );
+
+  }
+
+  public UpdatePassword(objuser : LoginModel)
+  {
+
+    let url= environment.apiEndpoint + "UserMaster/UpdatePassword/";
      console.log(888899999);
      console.log(objuser);
       return this.http.post<any>(url, objuser).pipe(tap(data => data),

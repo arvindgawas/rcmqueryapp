@@ -144,6 +144,19 @@ export class TicketdetailsComponent implements OnInit {
         ticketdetails.soleid="NA";
         ticketdetails.bankbranchlocation="NA";
       }
+      else
+      {
+        ticketdetails.customeruniquecode='NA';
+        ticketdetails.wronghcin='NA';
+        ticketdetails.wrongdispis='NA';
+        ticketdetails.actualdispis='NA';
+        ticketdetails.wrongclientcode="NA";
+        ticketdetails.wrongpickupcode="NA";
+        ticketdetails.wrongcustomeruniquecode="NA";
+        ticketdetails.soleid="NA";
+        ticketdetails.bankbranchlocation="NA";
+          
+      }
     }  
   }
 
@@ -385,16 +398,18 @@ export class TicketdetailsComponent implements OnInit {
       this.ticketdetails.pickupdate='';
       this.ticketdetails.clientcode=this.ticketmdoel.clientcode;
       this.ticketdetails.pickupcode=this.ticketmdoel.pickupcode;
-      this.ticketdetails.customeruniquecode='';
-      this.ticketdetails.wronghcin='';
+      this.ticketdetails.customeruniquecode='NA';
+      this.ticketdetails.wronghcin='NA';
       this.ticketdetails.actualhcin='';
-      this.ticketdetails.wrongdispis='';
-      this.ticketdetails.actualdispis='';
+      this.ticketdetails.wrongdispis='NA';
+      this.ticketdetails.actualdispis='NA';
       this.ticketdetails.wrongamt=0
       this.ticketdetails.actualamt=0
-      this.ticketdetails.wrongclientcode="";
-      this.ticketdetails.wrongpickupcode="";
-      this.ticketdetails.wrongcustomeruniquecode="";
+      this.ticketdetails.wrongclientcode="NA";
+      this.ticketdetails.wrongpickupcode="NA";
+      this.ticketdetails.wrongcustomeruniquecode="NA";
+      this.ticketdetails.soleid="NA";
+      this.ticketdetails.bankbranchlocation="NA";
       this.ticketdetails.depostiondate="";
       this.listtd.push(this.ticketdetails);
     }
