@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { ticketmdoel} from '../../model/ticketmodel'
 import {TicketService} from '../../ticket.service';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -17,19 +17,14 @@ import { Router } from '@angular/router';
 export class TicketdashComponent implements OnInit {
 
   lstqbank: ticketmdoel[]=[];
-
   lstaccepttickets: ticketmdoel[]=[];
-
   ticketdatefilter: Date = new Date();
-
   sdate : string;
-  
   dataSource: any;
-
   userdata : any ;
   userrole : any ;
-
-
+  filter : string="";
+  fileToUpload: File = null;
   @ViewChild(MatSort,{static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -39,11 +34,14 @@ export class TicketdashComponent implements OnInit {
   
  //,'bank' ,'ticketamount','status','actiontaken','hublocation','location','region','area','client','crnno','clientcode',];
 
-  constructor(public TicketService: TicketService, public _router : Router) { }
+  constructor(public TicketService: TicketService, public _router : Router,private _routeParams: ActivatedRoute) { 
+
+    this._routeParams.queryParams.subscribe(params => {
+      this.filter = params['filter']
+    });
+  }
 
   ngOnInit() {
-    console.log(555555); 
-
     this.userdata = JSON.parse(localStorage.getItem('currentUser'));
     this.userrole = JSON.parse(localStorage.getItem('userrole'));
     console.log(this.userdata.name); 
@@ -56,6 +54,13 @@ export class TicketdashComponent implements OnInit {
            this.dataSource = new MatTableDataSource(this.lstqbank );
            this.dataSource.sort = this.sort;
            this.dataSource.paginator = this.paginator;
+           if (!this.filter)
+           {
+           } 
+           else
+           {
+            this.applyFilter(this.filter);
+           }  
        },error => {
            alert(error);
            console.log("Error getting all tickets.", error);
@@ -76,6 +81,7 @@ export class TicketdashComponent implements OnInit {
            this.dataSource = new MatTableDataSource(this.lstqbank );
            this.dataSource.sort = this.sort;
            this.dataSource.paginator = this.paginator;
+           
        },error => {
            alert(error);
            console.log("Error getting all tickets.", error);
@@ -83,6 +89,7 @@ export class TicketdashComponent implements OnInit {
   
       }
 
+    
       ProcessTAT()
       {
         this.TicketService.ProcessTAT(this.ticketdatefilter.toString())

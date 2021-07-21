@@ -1,0 +1,38 @@
+<h4>Excel Uploads</h4>
+<hr>
+<div class="panel panel-default">
+    <div class="panel-heading">Upload Excel</div>
+    <div class="panel-body">
+        <form #f="ngForm" novalidate (ngSubmit)="onSubmit()">
+            <div class="row">
+
+                <div class="col-md-4">
+
+                    <label >Bulk Tickets Upload</label>
+
+                    <input type="file" class="form-control" name="fileupload"  (change)="onFileChange($event)"> 
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <label >Bulk Tickets Closure</label>
+
+                    <input type="file" class="form-control" name="fileuploadclose"  (change)="onFileChangeClose($event)"> 
+
+                </div>
+
+
+            </div>    
+            <div class="row">
+                <div class="col-md-12">
+                    <a style="margin-left: 10px; margin-top:7px;" class="btn btn-info" [routerLink]="['/ticket/all']">
+                        Ticket Dashboard 
+                    </a>
+                </div>
+            </div>
+
+
+        </form>    
+    </div>
+</div>

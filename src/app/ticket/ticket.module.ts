@@ -14,9 +14,10 @@ import { AddticketComponent } from './addticket/addticket.component';
 import { TicketdetailsComponent } from './ticketdetails/ticketdetails.component';
 import { SendemailComponent } from './sendemail/sendemail.component';
 import { TicketcountComponent } from './ticketcount/ticketcount.component';
+import { UploadComponent } from './upload/upload.component';
 
 @NgModule({
-  declarations: [TicketComponent, TicketdashComponent, AddticketComponent, TicketdetailsComponent, SendemailComponent, TicketcountComponent],
+  declarations: [TicketComponent, TicketdashComponent, AddticketComponent, TicketdetailsComponent, SendemailComponent, TicketcountComponent, UploadComponent],
   imports: [
     CommonModule,
     ticketRoutingModule,

@@ -180,6 +180,26 @@ downloadEmailBody(filepath : string,filename : string,ticketno : string)
     this.TicketService.downloadDocFile(filep,filen);
 }
 
+SendCloseResponse()
+ {
+    if (confirm("Do You want to Send Close Response?")) 
+    {
+        this.ticketmdoel.SendAutoCloseResponse='Y';
+
+        this.TicketService.SendCloseResponse(this.ticketmdoel)
+        .subscribe(
+        (data) => {
+            console.log(data);
+            alert("Close Response Sent Successfully.") 
+            },error => {
+                alert(error);
+                console.log("Error Saving Ticket Data.", error);
+            });
+    } 
+    
+ }
+
+
 onSubmit()
   {
      if (this.ticketmdoel.acceptstatus!= 'Accept')
@@ -194,11 +214,14 @@ onSubmit()
 
     this.ticketmdoel.SendAutoCloseResponse='N';
 
-    if (confirm("Do You want to Send Auto Close Response?")) 
+    if (this.ticketmdoel.status=="Close")
     {
-        this.ticketmdoel.SendAutoCloseResponse='Y';
-    } 
-
+        if (confirm("Do You want to Send Auto Close Response?")) 
+        {
+            this.ticketmdoel.SendAutoCloseResponse='Y';
+        } 
+    }
+    
     this.TicketService.UpdateTicket(this.ticketmdoel)
     .subscribe(
       (data) => {

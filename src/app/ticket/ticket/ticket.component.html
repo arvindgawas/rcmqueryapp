@@ -261,6 +261,9 @@
                     <a style="margin-left: 10px; margin-top:7px;" class="btn btn-info" [routerLink]="['/ticket/sendemail']" [queryParams]="{subject:ticketmdoel.emailsubject,ticketno:ticketmdoel.ticketno,emailbody:ticketmdoel.emailbody}">
                         Send Email to Bank/Location 
                     </a>
+                    <a style="margin-left: 10px; margin-top:7px;" class="btn btn-info" (click)="SendCloseResponse()">
+                        Send Close Response 
+                    </a>
                 </div>
             </div>
 

@@ -10,9 +10,10 @@ import { MatRadioModule } from '@angular/material/radio';
 import { AllexamuserComponent } from './allexamuser/allexamuser.component';
 import { AddexamuserComponent } from './addexamuser/addexamuser.component';
 import { EditexamuserComponent } from './editexamuser/editexamuser.component';
+import { AddbankComponent } from './addbank/addbank.component';
 
 @NgModule({
-  declarations: [AllexamuserComponent, AddexamuserComponent, EditexamuserComponent],
+  declarations: [AllexamuserComponent, AddexamuserComponent, EditexamuserComponent, AddbankComponent],
   imports: [
     ExamUserRoutingModule,
     CommonModule,

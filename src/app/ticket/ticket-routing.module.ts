@@ -7,6 +7,7 @@ import { AddticketComponent} from './addticket/addticket.component';
 import { TicketdetailsComponent } from './ticketdetails/ticketdetails.component';
 import { SendemailComponent } from './sendemail/sendemail.component';
 import { TicketcountComponent} from './ticketcount/ticketcount.component';
+import { UploadComponent } from './upload/upload.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
     { path: 'details/:ID', component: TicketdetailsComponent },
     { path: 'sendemail', component: SendemailComponent },
     { path: 'ticketcount', component: TicketcountComponent },
+    { path: 'upload', component: UploadComponent },
 ];
 
 @NgModule({

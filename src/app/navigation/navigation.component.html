@@ -18,8 +18,10 @@
             </mat-nav-list>
             <mat-menu #menu="matMenu">
                 <a mat-menu-item routerLink='/userexam/' *ngIf="adminloggedIn | async">User Master</a>
+                <a mat-menu-item routerLink='/userexam/addbank'>Bank Master</a>
                 <a mat-menu-item routerLink='/ticket/all'>Ticket Master</a>
                 <a mat-menu-item routerLink='/report'>Ticket Tracker Report</a>
+                <a mat-menu-item routerLink='/ticket/upload'>Excel Uploads</a>
             </mat-menu>
         </mat-sidenav>>
         <mat-sidenav-content>

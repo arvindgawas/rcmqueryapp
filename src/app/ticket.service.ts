@@ -38,6 +38,26 @@ export class TicketService {
     catchError(this.handleError));
   }
 
+  postExcelFileClose(fileToUpload: File): Observable<boolean> 
+  {
+    let url= environment.apiEndpoint+"ticket/UploadBulkTickeClose";
+     const formData: FormData = new FormData();
+    formData.append('fileKey', fileToUpload, fileToUpload.name);
+    return this.http.post<any>(url,formData).pipe(tap(data => data),
+    catchError(this.handleError));
+  }
+
+  postExcelFile(fileToUpload: File): Observable<boolean> 
+  {
+    let url= environment.apiEndpoint+"ticket/UploadExcelFile";
+     const formData: FormData = new FormData();
+    formData.append('fileKey', fileToUpload, fileToUpload.name);
+    return this.http.post<any>(url,formData).pipe(tap(data => data),
+    catchError(this.handleError));
+  }
+
+
+
   public downloadnew(filepath : string,filename : string)
   {
     let url= environment.apiEndpoint+"ticket/Downloadnew";
@@ -286,6 +306,19 @@ export class TicketService {
 
   }
 
+  public AddBank(bankname : string)
+  {
+    let url= environment.apiEndpoint + "UserMaster/AddBank/";
+
+    const param = new HttpParams({});
+    const params = new HttpParams().set('bankname', bankname);
+
+  
+      return this.http.get<any>(url,{params}).pipe(tap(data => data),
+              catchError(this.handleError)
+              );
+
+  }
 
   public SaveUser(objuser : user)
   {
@@ -404,6 +437,15 @@ export class TicketService {
   public UpdateTicket(objticketmdoel:ticketmdoel)
   {
     let url= environment.apiEndpoint +"Ticket/UpdateTicket";
+
+    return this.http.put<any>(url, objticketmdoel).pipe(tap(data => data),
+              catchError(this.handleError)
+              );
+  }
+
+  public SendCloseResponse(objticketmdoel:ticketmdoel)
+  {
+    let url= environment.apiEndpoint +"Ticket/SendCloseResponse";
 
     return this.http.put<any>(url, objticketmdoel).pipe(tap(data => data),
               catchError(this.handleError)
