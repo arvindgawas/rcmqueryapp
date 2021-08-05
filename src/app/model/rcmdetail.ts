@@ -10,6 +10,7 @@ export class rcmdetail
     public customertype: string;
     public hierarchycode: string;
     public pickupcode :string;
+    public Company :string;
 }
 
 

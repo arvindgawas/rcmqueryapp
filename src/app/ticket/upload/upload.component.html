@@ -3,7 +3,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">Upload Excel</div>
     <div class="panel-body">
-        <form #f="ngForm" novalidate (ngSubmit)="onSubmit()">
+        <form #f="ngForm" novalidate >
             <div class="row">
 
                 <div class="col-md-4">
@@ -14,12 +14,26 @@
 
                 </div>
 
+                <div class="col-md-2">
+                    <label for="name">Download Template</label>
+                    <button type="button" (click)="downloadDocFile()" class="btn btn-success" >  
+                        <span class="fa fa-download"> Download Template </span>  
+                    </button>  
+                </div>
+
                 <div class="col-md-4">
 
                     <label >Bulk Tickets Closure</label>
 
                     <input type="file" class="form-control" name="fileuploadclose"  (change)="onFileChangeClose($event)"> 
 
+                </div>
+
+                <div class="col-md-2">
+                    <label for="name">Download Template</label>
+                    <button type="button" (click)="downloadDocFileClose()" class="btn btn-success" >  
+                        <span class="fa fa-download"> Download Template </span>  
+                    </button>  
                 </div>
 
 

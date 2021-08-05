@@ -119,6 +119,7 @@ export class TicketComponent implements OnInit {
          this.ticketmdoel.cdpncm = data.cdpncm
          this.ticketmdoel.customertype = data.customertype
          this.ticketmdoel.hierarchycode = data.hierarchycode
+         this.ticketmdoel.company = data.Company
      },error => {
          alert(error);
          console.log("Error getting dashboard count.", error);
@@ -143,6 +144,7 @@ export class TicketComponent implements OnInit {
              this.ticketmdoel.cdpncm = data.cdpncm
              this.ticketmdoel.customertype = data.customertype
              this.ticketmdoel.hierarchycode = data.hierarchycode
+             this.ticketmdoel.company = data.Company
          },error => {
              alert(error);
              console.log("Error getting dashboard count.", error);
@@ -253,8 +255,14 @@ onSubmit()
                 console.log("Error while uploading file.", error);
             });
         }
-        
+        if (this.ticketmdoel.status=="Close")
+        {
          this._router.navigate(['/ticket/all']);
+        }
+        else
+        {
+            this._router.navigate(['/ticket/details/'+this.ticketmdoel.ticketno]);
+        }
 
       },error => {
           alert(error);

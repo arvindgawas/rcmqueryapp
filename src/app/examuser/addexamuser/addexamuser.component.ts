@@ -35,6 +35,30 @@ export class AddexamuserComponent implements OnInit {
      });
   }
 
+  ValidatePriorityUser(objum :userbankmap,userid : string)
+  {
+        console.log(objum.UserPriority);
+     
+      if (objum.UserPriority =="1")
+      {
+        this.TicketService.ValidatePriorityUser(objum,userid)
+        .subscribe(
+          (data) => {
+              console.log(data);
+              if (data >0)
+              {
+                alert("Already user with Priority 1 exist for tbis Bank and QueryType.")
+                objum.UserPriority="";
+              }
+              
+          },error => {
+             alert(error);
+              console.log("Error ValidatePriorityUser", error);
+          });
+      }
+  }
+
+
   onSubmit()
   {
      this.user.lstuserbankmap = this.lstuserbankmap;

@@ -1,7 +1,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">Ticket Tracker Report</div>
     <div class="panel-body">
-        <form #f="ngForm" novalidate (ngSubmit)="onSubmit()">
+        <form #f="ngForm" novalidate >
             <div class="row">
                 <div class="col-md-2">
                     <label for="name">From Date</label>
@@ -86,8 +86,11 @@
 
                 <div class="col-md-2">
                     <label for="name">SLA</label>
-                    <input type="text" class="form-control" name="issuetype" [(ngModel)]="report.sla" 
-                    id="sla" >    
+                    <select required name="sla" class="form-control" [(ngModel)]="report.sla" >
+                        <option value=''>Please select Value</option>
+                        <option value='Within TAT'>Within TAT</option>
+                        <option value='After TAT'>After TAT</option>
+                    </select>    
                 </div>
             </div>
 

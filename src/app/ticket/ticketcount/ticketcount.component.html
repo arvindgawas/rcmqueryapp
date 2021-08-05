@@ -37,7 +37,7 @@
                        </a>
                     </div>
                     <div class="col-md-1">
-                        <a  [routerLink]="['/ticket/all']" [queryParams]="{filter:'open'}">
+                        <a  [routerLink]="['/ticket/all']" [queryParams]="{filter:'assigned'}">
                             Pending 
                        </a>
                     </div>
@@ -92,13 +92,19 @@
                         <label for="name">Bank</label>
                     </div>
                     <div class="col-md-1">
-                        <label for="name">Open</label>
+                        <a  [routerLink]="['/ticket/all']" [queryParams]="{filter:'open'}">
+                            Open 
+                       </a>                    
                     </div>
                     <div class="col-md-1">
-                        <label for="name">Accepted</label>
+                        <a  [routerLink]="['/ticket/all']" [queryParams]="{filter:'accept'}">
+                            Accepted 
+                       </a>
                     </div>
                     <div class="col-md-1">
-                        <label for="name">Pending</label>
+                        <a  [routerLink]="['/ticket/all']" [queryParams]="{filter:'assigned'}">
+                            Pending 
+                       </a>
                     </div>
                     <div class="col-md-1">
                         <label for="name">Total</label>
@@ -106,8 +112,10 @@
                     </div>
                     <div class="row" *ngFor="let ticketcount of lstticketcount;let index = index;">
                         <div class="col-md-2">
-                            <input class="form-control" type="text"   name="bank-{{index}}" [(ngModel)]="ticketcount.bank" maxlength="50"
-                             readonly>
+                             <a  style="margin-left:20px;" [routerLink]="['/ticket/all']" [queryParams]="{filter:ticketcount.bank}">
+                                {{ticketcount.bank}} 
+                           </a>  
+
                         </div>
                         <div class="col-md-1">
                             <input class="form-control" type="text"   name="opencount-{{index}}" [(ngModel)]="ticketcount.opencount" maxlength="50"

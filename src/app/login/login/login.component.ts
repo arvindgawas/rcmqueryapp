@@ -45,6 +45,8 @@ export class LoginComponent implements OnInit {
             {
                 localStorage.setItem('currentUser', JSON.stringify({ name: this.LoginModel.UserId }));
                 localStorage.setItem('userrole', JSON.stringify({ userrole: this.LoginModel.userrole }));
+                localStorage.setItem('datefilter', JSON.stringify({ datefilter: new Date()}));
+
                 this.valloginser.validateLoginUser();
                 this.valloginser.toggle();
                 this.router.navigate(['/ticket/all']);

@@ -42,7 +42,7 @@ export class NavigationComponent implements OnInit {
   {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('userrole');
-    
+    localStorage.removeItem('datefilter');
     this.ID="";
     this.validloginser.validateLoginUser()
     this.isLoggedIn = this.validloginser.isLoggedIn;

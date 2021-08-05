@@ -83,14 +83,14 @@
                 <div class="row">
                     <div class="col-md-2">
                         <input class="form-control" type="text"   name="Bank-{{index}}" [(ngModel)]="userbankmap.Bank" maxlength="50"
-                        #refbank="ngModel" id="Bank" readonly>
+                        #refbank="ngModel"  readonly>
                     </div>
                     <div class="col-md-2">
                         <input class="form-control" type="text"   name="QueryType-{{index}}" [(ngModel)]="userbankmap.QueryType" maxlength="50"
-                        #refQueryType="ngModel" id="bank" readonly>
+                        #refQueryType="ngModel"  readonly>
                     </div>
                     <div class="col-md-2">
-                        <select  class="form-control" name="UserPriority-{{index}}" #refUserPriority="ngModel" class="form-control" [(ngModel)]="userbankmap.UserPriority">    
+                        <select  class="form-control" name="UserPriority-{{index}}" #refUserPriority="ngModel" class="form-control" [(ngModel)]="userbankmap.UserPriority" (ngModelChange)="ValidatePriorityUser(userbankmap,user.UserId)">    
                             <option value=''>Please select Value</option>
                             <option [ngValue]="1">
                                 Priority 1

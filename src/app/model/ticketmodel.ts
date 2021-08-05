@@ -14,6 +14,7 @@ export class ticketmdoel
     public emailsubject:string;
     public emailfrom:string;
     public emailbody:string;
+    public emailcc:string;
     public bank:string;
     public pickupcode:string;
     public clientcode:string;
@@ -37,6 +38,7 @@ export class ticketmdoel
     public createddate :Date;
     public modifieduser :string;
     public modifieddate :Date; 
+    public company :string;
 }
 
 

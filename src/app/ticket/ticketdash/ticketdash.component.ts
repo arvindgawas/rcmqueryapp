@@ -3,7 +3,7 @@ import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { ticketmdoel} from '../../model/ticketmodel'
 import {TicketService} from '../../ticket.service';
 import { Router,ActivatedRoute } from '@angular/router';
-
+import {formatDate} from '@angular/common';
 
 @Component({
   selector: 'app-ticketdash',
@@ -23,6 +23,7 @@ export class TicketdashComponent implements OnInit {
   dataSource: any;
   userdata : any ;
   userrole : any ;
+  datefilter : any;
   filter : string="";
   fileToUpload: File = null;
   @ViewChild(MatSort,{static: true}) sort: MatSort;
@@ -44,9 +45,11 @@ export class TicketdashComponent implements OnInit {
   ngOnInit() {
     this.userdata = JSON.parse(localStorage.getItem('currentUser'));
     this.userrole = JSON.parse(localStorage.getItem('userrole'));
-    console.log(this.userdata.name); 
-    console.log(this.userrole.userrole); 
-    this.TicketService.GetAllTickets(this.userdata.name,this.userrole.userrole)
+    this.datefilter = JSON.parse(localStorage.getItem('datefilter'));
+    this.datefilter.datefilter = formatDate(this.datefilter.datefilter, 'yyyy/MM/dd', 'en');
+    this.ticketdatefilter = this.datefilter.datefilter;
+    this.TicketService.GetAllTicketsfordate(this.datefilter.datefilter,this.userdata.name,this.userrole.userrole)
+    //this.TicketService.GetAllTickets(this.userdata.name,this.userrole.userrole)
      .subscribe(
        (data) => {
            console.log(data);
@@ -54,12 +57,14 @@ export class TicketdashComponent implements OnInit {
            this.dataSource = new MatTableDataSource(this.lstqbank );
            this.dataSource.sort = this.sort;
            this.dataSource.paginator = this.paginator;
+           console.log(11111);
+           console.log(this.filter);
            if (!this.filter)
            {
            } 
            else
            {
-            this.applyFilter(this.filter);
+             this.applyFilter(this.filter);
            }  
        },error => {
            alert(error);
@@ -72,7 +77,7 @@ export class TicketdashComponent implements OnInit {
     }
 
     onFocusOutEvent(){
-     
+      localStorage.setItem('datefilter', JSON.stringify({ datefilter: this.ticketdatefilter.toString()}));
       this.TicketService.GetAllTicketsfordate(this.ticketdatefilter.toString(),this.userdata.name,this.userrole.userrole)
      .subscribe(
        (data) => {
@@ -132,6 +137,7 @@ export class TicketdashComponent implements OnInit {
     .subscribe(
       (data) => {
           alert("Accept Status Saved Successfully.");
+          this.ngOnInit();
           console.log(data);
       },error => {
           alert(error);

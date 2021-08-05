@@ -320,6 +320,16 @@ export class TicketService {
 
   }
 
+  public GetAllBanks()
+  {
+    let url= environment.apiEndpoint + "UserMaster/GetAllBanks/";
+  
+      return this.http.get<any>(url).pipe(tap(data => data),
+              catchError(this.handleError)
+              );
+
+  }
+
   public SaveUser(objuser : user)
   {
 

@@ -35,7 +35,7 @@
                 <ng-template #thenBlock>
                     <div class="col-md-2">
                         <label for="name">Assigned To</label>
-                        <select name="assignedto" #refassignedto="ngModel" class="form-control" [(ngModel)]="ticketmdoel.assignedto">    
+                        <select required name="assignedto" #refassignedto="ngModel" class="form-control" [(ngModel)]="ticketmdoel.assignedto">    
                             <option value=''>Please select Value</option>
                             <option *ngFor="let Userdd of ddlist.Userddlist" [ngValue]="Userdd.ID">
                                 {{Userdd.UserName}}
@@ -78,17 +78,23 @@
                     #refExamName="ngModel" id="batchno">
                 </div>
                 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label for="name">Email Subject</label>
                     <input type="text" class="form-control"  readonly name="emailsubject" [(ngModel)]="ticketmdoel.emailsubject" maxlength="500"
                     #refExamName="ngModel" id="emailsubject">
                 </div> 
                 
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <label >Email From</label>
                     <input type="text" class="form-control" readonly name="emailfrom" [(ngModel)]="ticketmdoel.emailfrom" maxlength="50"
                     #refExamName="ngModel" id="emailfrom">
                 </div>
+
+                <div class="col-md-4">
+                    <label for="name">Email CC</label>
+                    <input type="text" class="form-control"  readonly name="emailcc" [(ngModel)]="ticketmdoel.emailcc" maxlength="500"
+                    #refExamName="ngModel" id="emailcc">
+                </div> 
                
             </div>
 
@@ -113,7 +119,7 @@
 
                 <div class="col-md-3">
                     <label for="name">Customer</label>
-                    <input type="text" class="form-control" name="bank" [(ngModel)]="ticketmdoel.bank" maxlength="50"
+                    <input required type="text" class="form-control" name="bank" [(ngModel)]="ticketmdoel.bank" maxlength="50"
                     #refExamName="ngModel" id="bank">
                 </div>
 
@@ -126,19 +132,19 @@
                
                 <div class="col-md-3">
                     <label for="name">Pickup Code</label>
-                    <input type="text" class="form-control"   name="pickupcode" [(ngModel)]="ticketmdoel.pickupcode" maxlength="50"
+                    <input required type="text" class="form-control"   name="pickupcode" [(ngModel)]="ticketmdoel.pickupcode" maxlength="50"
                     #refExamName="ngModel" id="pickupcode">
                 </div>
                 
                 <div class="col-md-3">
                     <label for="name">Client Code</label>
-                    <input type="text" class="form-control"   name="clientcode" [(ngModel)]="ticketmdoel.clientcode" maxlength="50"
+                    <input required type="text" class="form-control"   name="clientcode" [(ngModel)]="ticketmdoel.clientcode" maxlength="50"
                     #refExamName="ngModel" id="clientcode" (blur)="onFocusOutEvent($event)">
                 </div>
 
                 <div class="col-md-3">
                     <label for="name">CRN No</label>
-                    <input type="text" class="form-control" name="crnno" [(ngModel)]="ticketmdoel.crnno" maxlength="50"
+                    <input required type="text" class="form-control" name="crnno" [(ngModel)]="ticketmdoel.crnno" maxlength="50"
                     #refExamName="ngModel" id="crnno" (blur)="onCrnOutEvent($event)">
                 </div>
 
@@ -183,7 +189,7 @@
 
                 <div class="col-md-3">
                     <label for="name">Mistake Done by</label>
-                    <select  name="mistakedoneby" #refQuestionBank="ngModel" class="form-control" [(ngModel)]="ticketmdoel.mistakedoneby">
+                    <select required name="mistakedoneby" #refQuestionBank="ngModel" class="form-control" [(ngModel)]="ticketmdoel.mistakedoneby">
                         <option value=''>Please select Value</option>
                         <option value='Location'>Location</option>
                         <option value='Customer'>Customer</option>
@@ -194,7 +200,7 @@
 
                 <div class="col-md-3">
                     <label for="name">Type of Error</label>
-                    <select  name="errortype" #referrortype="ngModel" class="form-control" [(ngModel)]="errortype">    
+                    <select required name="errortype" #referrortype="ngModel" class="form-control" [(ngModel)]="errortype">    
                         <option value=''>Please select Value</option>
                         <option *ngFor="let errortype of ddlist.errortypelst" [ngValue]="errortype.ID">
                             {{errortype.ErrorName}}

@@ -13,11 +13,28 @@ import { TicketService } from '../../ticket.service'
 })
 export class UploadComponent implements OnInit {
   fileToUpload: File = null;
+  filepath : string;
+  filename : string;
 
   constructor(public TicketService: TicketService, public _router : Router) { }
 
   ngOnInit() {
   }
+
+  downloadDocFile()
+ {
+  this.filepath ="F:/rcmquery/uploadtemplates/crnupload.xls";
+  this.filename = 'crnupload.xls';
+   this.TicketService.downloadDocFile(this.filepath,this.filename);
+ }
+
+ downloadDocFileClose()
+ {
+  this.filepath ="F:/rcmquery/uploadtemplates/ticketclosure.xls";
+  this.filename = 'ticketclosure.xls';
+   this.TicketService.downloadDocFile(this.filepath,this.filename);
+ }
+
 
   onFileChange(event) {
     if (event.target.files.length > 0) {

@@ -54,6 +54,10 @@ export class AllexamuserComponent implements OnInit {
       this.TicketService.DeleteUser(UserID).subscribe
           (
           response => {
+            alert('Deleted User Successfully');
+            this.ngOnInit();
+      
+              /*
               if (response.StatusCode == "200") {
                   alert('Deleted User Successfully');
                   //location.reload();
@@ -63,6 +67,7 @@ export class AllexamuserComponent implements OnInit {
                   alert('Something Went Wrong');
                   this._router.navigate(['/usermaster/alluser']);
               }
+              */
           }
           )
     }

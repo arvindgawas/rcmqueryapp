@@ -11,9 +11,10 @@ import { AllexamuserComponent } from './allexamuser/allexamuser.component';
 import { AddexamuserComponent } from './addexamuser/addexamuser.component';
 import { EditexamuserComponent } from './editexamuser/editexamuser.component';
 import { AddbankComponent } from './addbank/addbank.component';
+import { AllbankComponent } from './allbank/allbank.component';
 
 @NgModule({
-  declarations: [AllexamuserComponent, AddexamuserComponent, EditexamuserComponent, AddbankComponent],
+  declarations: [AllexamuserComponent, AddexamuserComponent, EditexamuserComponent, AddbankComponent, AllbankComponent],
   imports: [
     ExamUserRoutingModule,
     CommonModule,
