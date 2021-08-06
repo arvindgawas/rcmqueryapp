@@ -48,7 +48,7 @@ export class TicketdashComponent implements OnInit {
     this.datefilter = JSON.parse(localStorage.getItem('datefilter'));
     this.datefilter.datefilter = formatDate(this.datefilter.datefilter, 'yyyy/MM/dd', 'en');
     this.ticketdatefilter = this.datefilter.datefilter;
-    this.TicketService.GetAllTicketsfordate(this.datefilter.datefilter,this.userdata.name,this.userrole.userrole)
+    this.TicketService.GetAllTicketsfordate(this.datefilter.datefilter,this.userdata.name,this.userrole.userrole,this.filter)
     //this.TicketService.GetAllTickets(this.userdata.name,this.userrole.userrole)
      .subscribe(
        (data) => {
@@ -78,7 +78,7 @@ export class TicketdashComponent implements OnInit {
 
     onFocusOutEvent(){
       localStorage.setItem('datefilter', JSON.stringify({ datefilter: this.ticketdatefilter.toString()}));
-      this.TicketService.GetAllTicketsfordate(this.ticketdatefilter.toString(),this.userdata.name,this.userrole.userrole)
+      this.TicketService.GetAllTicketsfordate(this.ticketdatefilter.toString(),this.userdata.name,this.userrole.userrole,this.filter)
      .subscribe(
        (data) => {
            console.log(data);

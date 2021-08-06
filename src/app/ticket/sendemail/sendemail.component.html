@@ -69,8 +69,13 @@
             </div>
 
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-1">
                     <button type="submit" style="margin-top: 10px" [disabled]="!f.form.valid" class="btn btn-success"  >Submit</button>
+                </div>
+                <div class="col-md-1">   
+                    <a style="margin-left: 10px; margin-top:10px;" class="btn btn-info" [routerLink]="['/ticket/all']">
+                    All Tickets 
+                    </a>
                 </div>
             </div>
         </form>   

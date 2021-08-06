@@ -8,10 +8,9 @@
           </a>
         </div>
     <div class="col-md-2">
-      <h4>Ticket Date Filter</h4>
     </div>
     <div class="col-md-2" style="margin-top:7px" >
-      <input type="date" class="form-control"  name="ticketdate" [ngModel]="ticketdatefilter|date:'yyyy-MM-dd'" (ngModelChange)="ticketdatefilter=$event" maxlength="50"
+      <input  type="hidden"  class="form-control"  name="ticketdate" [ngModel]="ticketdatefilter|date:'yyyy-MM-dd'" (ngModelChange)="ticketdatefilter=$event" maxlength="50"
       #refticketdatefilter="ngModel" id="ticketdatefilter" (ngModelChange)="onFocusOutEvent()">     
     </div>
           <div class="col-md-2">

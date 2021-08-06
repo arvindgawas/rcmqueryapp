@@ -25,6 +25,7 @@ export class TicketComponent implements OnInit {
   userrole : any;
   adminrole :boolean=false;
   errorexist : boolean=false;
+  allclose : boolean=false;
 
   constructor(public TicketService : TicketService, public _router : Router,private _routeParams: ActivatedRoute ) { }
 
@@ -202,6 +203,55 @@ SendCloseResponse()
  }
 
 
+updateticket()
+{
+    this.TicketService.UpdateTicket(this.ticketmdoel)
+    .subscribe(
+      (data) => {
+          console.log(data);
+          alert("Data Saved Successfully.") 
+        if (this.fileToUpload != null)
+        {
+            this.TicketService.postFile(this.fileToUpload,this.ticketmdoel.ticketno)
+            .subscribe(
+            (data) => {
+                console.log(data)           
+            },error => {
+                alert(error);
+                console.log("Error while uploading file.", error);
+            });
+        }
+
+        if (this.ticketmdoel.status=="Close")
+        {
+            if (this.ticketmdoel.SendAutoCloseResponse=='N')
+            {
+                if (this.allclose)
+                {
+                    this._router.navigate(['/ticket/sendemail'],{ queryParams: { subject:this.ticketmdoel.emailsubject,ticketno:this.ticketmdoel.ticketno,emailbody:this.ticketmdoel.emailbody } });   
+                }
+                else
+                {
+                    this._router.navigate(['/ticket/all']);    
+                }    
+            }   
+            else
+            {
+                this._router.navigate(['/ticket/all']);
+            }
+        }
+        else
+        {              
+            this._router.navigate(['/ticket/details/'+this.ticketmdoel.ticketno]);
+        }
+      },error => {
+          alert(error);
+          console.log("Error Saving Ticket Data.", error);
+      });
+
+}
+
+
 onSubmit()
   {
      if (this.ticketmdoel.acceptstatus!= 'Accept')
@@ -218,111 +268,39 @@ onSubmit()
 
     if (this.ticketmdoel.status=="Close")
     {
-        if (confirm("Do You want to Send Auto Close Response?")) 
-        {
-            this.ticketmdoel.SendAutoCloseResponse='Y';
-        } 
+        this.TicketService.getticketclosecount(this.ticketmdoel.batchno)
+        .subscribe(
+        (data) => {
+            console.log(data);
+            if (data == "allclose")
+            {
+                this.allclose = true; 
+                if (confirm("Do You want to Send Auto Close Response?")) 
+                {
+                    this.ticketmdoel.SendAutoCloseResponse='Y';
+                    //this._router.navigate(['/ticket/details/'+this.ticketmdoel.ticketno]);
+                    this.updateticket()
+                } 
+                else
+                {
+                    this.updateticket()
+                }
+            }
+            else
+            {
+                //this._router.navigate(['/ticket/details/'+this.ticketmdoel.ticketno]);
+                this.updateticket()
+            }           
+        },error => {
+            alert(error);
+            console.log("Error while sending accept email.", error);
+        });
+
     }
-    
-    this.TicketService.UpdateTicket(this.ticketmdoel)
-    .subscribe(
-      (data) => {
-          console.log(data);
-          alert("Data Saved Successfully.") 
-
-        /*
-        if   (this.ticketmdoel.status="Open")
-        { 
-            this.TicketService.Sendacceptemail(this.ticketmdoel.batchno)
-            .subscribe(
-            (data) => {
-                console.log(data)           
-            },error => {
-                alert(error);
-                console.log("Error while sending accept email.", error);
-            });
-        }
-        */
-       
-        if (this.fileToUpload != null)
-        {
-            this.TicketService.postFile(this.fileToUpload,this.ticketmdoel.ticketno)
-            .subscribe(
-            (data) => {
-                console.log(data)           
-            },error => {
-                alert(error);
-                console.log("Error while uploading file.", error);
-            });
-        }
-        if (this.ticketmdoel.status=="Close")
-        {
-         this._router.navigate(['/ticket/all']);
-        }
-        else
-        {
-            this._router.navigate(['/ticket/details/'+this.ticketmdoel.ticketno]);
-        }
-
-      },error => {
-          alert(error);
-          console.log("Error Saving Ticket Data.", error);
-      });
-  }
-
+    else
+    {
+        this.updateticket();
+    }
+}  
 }
 
-/*
-
-<div class="col-md-4">
-                    <label for="name">Ticket Amount</label>
-                    <input type="text" class="form-control"   name="ticketamount" [(ngModel)]="ticketmdoel.ticketamount" maxlength="50"
-                    #refExamName="ngModel" id="ticketamount">
-                </div>
-
-                <div class="col-md-4">
-                    <label for="name">Actual Amount</label>
-                    <input type="text" class="form-control"   name="actualamount" [(ngModel)]="ticketmdoel.actualamount" maxlength="50"
-                    #refExamName="ngModel" id="actualamount">
-                </div>
-
-                    <div class="col-md-4">
-                    <label for="name">Ticket HCIN No</label>
-                    <input type="text" class="form-control"  name="status" [(ngModel)]="ticketmdoel.tickethcin" maxlength="50"
-                    #refExamName="ngModel" id="tickethcin">
-                </div>
-
-                <div class="col-md-4">
-                    <label for="name">Actual HCIN No</label>
-                    <input type="text" class="form-control"   name="actualhcin" [(ngModel)]="ticketmdoel.actualhcin" maxlength="50"
-                    #refExamName="ngModel" id="actualhcin">
-                </div>
-
-                
-                <div class="col-md-4">
-                    <label for="name">Pickup Date</label>
-                    <input type="text" class="form-control"  name="pickupdate" [(ngModel)]="ticketmdoel.pickupdate" maxlength="50"
-                    #refpickupdate="ngModel" id="pickupdate">
-                </div>
-
-                <div class="col-md-4">
-                    <label for="name">Area</label>
-                    <input type="text" class="form-control" readonly name="area" [(ngModel)]="ticketmdoel.area" maxlength="50"
-                    #refExamName="ngModel" id="area">
-                </div>
-                               
-                <div class="col-md-4">
-                    <label for="name">CDP/NCM</label>
-                    <input type="text" class="form-control" readonly name="cdpncm" [(ngModel)]="ticketmdoel.cdpncm" maxlength="50"
-                    #refExamName="ngModel" id="cdpncm">
-                </div>
-
-                                <div class="col-md-4">
-                    <label for="name">Query Resolved Date</label>
-                    <input type="text" class="form-control" readonly name="resolveddate" [(ngModel)]="ticketmdoel.resolveddate" maxlength="50"
-                    #refExamName="ngModel" id="resolveddate">
-                </div>
-
-
-
-*/

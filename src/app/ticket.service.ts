@@ -370,9 +370,23 @@ export class TicketService {
 
   }
 
+  public getticketclosecount(batchno : string)
+  {
+
+    console.log(batchno);
+    let url= environment.apiEndpoint + "Ticket/getticketclosecount";
+
+    const param = new HttpParams({});
+    const params = new HttpParams().set('batchno', batchno);
+
+    return this.http.get<string>(url,{params}).pipe(tap(data => data),
+    catchError(this.handleError));
+
+  }
+
   
 
-  public GetAllTicketsfordate(datefilter : string,userid:string,userrole : string)
+  public GetAllTicketsfordate(datefilter : string,userid:string,userrole : string,filter :string)
   {
     console.log(datefilter);
     console.log(userid);
@@ -380,7 +394,7 @@ export class TicketService {
     let url= environment.apiEndpoint + "Ticket/GetAllTicketsfordate";
 
     const param = new HttpParams({});
-    const params = new HttpParams().set('datefilter', datefilter).set('userid', userid).set('userrole',userrole);
+    const params = new HttpParams().set('datefilter', datefilter).set('userid', userid).set('userrole',userrole).set('filter',filter);
 
     return this.http.get<ticketmdoel[]>(url,{params}).pipe(tap(data => data),
     catchError(this.handleError));
