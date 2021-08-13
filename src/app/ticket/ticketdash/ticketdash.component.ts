@@ -26,6 +26,7 @@ export class TicketdashComponent implements OnInit {
   datefilter : any;
   filter : string="";
   fileToUpload: File = null;
+  adminrole :boolean=false;
   @ViewChild(MatSort,{static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -42,12 +43,48 @@ export class TicketdashComponent implements OnInit {
     });
   }
 
+  AllPendng()
+  {
+    this.TicketService.GetAllTicketsfordate("",this.userdata.name,this.userrole.userrole,this.filter)
+    //this.TicketService.GetAllTickets(this.userdata.name,this.userrole.userrole)
+     .subscribe(
+       (data) => {
+           console.log(data);
+           this.lstqbank = data;
+           this.dataSource = new MatTableDataSource(this.lstqbank );
+           this.dataSource.sort = this.sort;
+           this.dataSource.paginator = this.paginator;
+           console.log(11111);
+           console.log(this.filter);
+           if (!this.filter)
+           {
+           } 
+           else
+           {
+             this.applyFilter(this.filter);
+           }  
+       },error => {
+           alert(error);
+           console.log("Error getting all tickets.", error);
+       });
+
+  }
+
   ngOnInit() {
     this.userdata = JSON.parse(localStorage.getItem('currentUser'));
     this.userrole = JSON.parse(localStorage.getItem('userrole'));
     this.datefilter = JSON.parse(localStorage.getItem('datefilter'));
+    if (this.userrole.userrole == 'admin')
+    {
+        this.adminrole =true;
+    }
+    else
+    {
+      this.adminrole =false;
+    }
     this.datefilter.datefilter = formatDate(this.datefilter.datefilter, 'yyyy/MM/dd', 'en');
     this.ticketdatefilter = this.datefilter.datefilter;
+    //alert(this.datefilter.datefilter);
     this.TicketService.GetAllTicketsfordate(this.datefilter.datefilter,this.userdata.name,this.userrole.userrole,this.filter)
     //this.TicketService.GetAllTickets(this.userdata.name,this.userrole.userrole)
      .subscribe(

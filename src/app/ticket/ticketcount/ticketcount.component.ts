@@ -38,7 +38,7 @@ export class TicketcountComponent implements OnInit {
     {
         this.adminrole =true;
     }
-
+    
      this.TicketService.getdashboardcount(this.userdata.name ,this.ticketdate.toString(),this.userrole.userrole)
     .subscribe(
        (data) => {

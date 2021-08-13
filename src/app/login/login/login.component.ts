@@ -22,6 +22,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('userrole');
+    localStorage.removeItem('datefilter');
   }
 
   onSubmit() {

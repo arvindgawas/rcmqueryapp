@@ -9,16 +9,24 @@
         </div>
     <div class="col-md-2">
     </div>
-    <div class="col-md-2" style="margin-top:7px" >
-      <input  type="hidden"  class="form-control"  name="ticketdate" [ngModel]="ticketdatefilter|date:'yyyy-MM-dd'" (ngModelChange)="ticketdatefilter=$event" maxlength="50"
-      #refticketdatefilter="ngModel" id="ticketdatefilter" (ngModelChange)="onFocusOutEvent()">     
-    </div>
+    <div *ngIf="adminrole; then thenBlock else elseBlock"></div>
+        <ng-template #thenBlock>
+          <div class="col-md-2" style="margin-top:7px">
+            <input  type="date"  class="form-control"  name="ticketdate" [ngModel]="ticketdatefilter|date:'yyyy-MM-dd'" (ngModelChange)="ticketdatefilter=$event" maxlength="50"
+            #refticketdatefilter="ngModel" id="ticketdatefilter" (ngModelChange)="onFocusOutEvent()">  
+          </div>
           <div class="col-md-2">
-            <a style="margin-top:7px" class="btn btn-info" [routerLink]="['/ticket/upload']">
+            <button type="button" style="margin-top:7px;margin-right: 200px;" class="btn btn-info" (click)="AllPendng()">All Pending</button>
+            <!--<a style="margin-top:7px" class="btn btn-info" [routerLink]="['/ticket/upload']">
               Bulk Upload
-            </a>
+            </a>-->
             <!--<button type="button" style="margin-top:7px;margin-right: 200px;" class="btn btn-info" (click)="ProcessTAT()">ProcessTAT</button>-->
-          </div>  
+          </div>
+        </ng-template>
+        <ng-template #elseBlock>
+         </ng-template> 
+    
+        
           <div class="col-md-2">
           <a style="margin-top:7px" class="btn btn-info" [routerLink]="['/ticket/add']">
             Add Ticket
