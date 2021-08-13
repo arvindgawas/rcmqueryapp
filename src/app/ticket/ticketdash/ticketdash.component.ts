@@ -132,6 +132,18 @@ export class TicketdashComponent implements OnInit {
 
   acceptsubmit()
   {
+
+    for (var ti of this.lstaccepttickets)
+    {
+      if (ti.acceptstatus=="Reject")
+      {
+        if (ti.rejectremark == undefined || ti.rejectremark == null || ti.rejectremark =="")
+      {
+        alert("Reject Reamrk is Mandatory.");
+        return;
+      }
+      } 
+    }     
     
     this.TicketService.UpdateTicketAccept(this.lstaccepttickets)
     .subscribe(

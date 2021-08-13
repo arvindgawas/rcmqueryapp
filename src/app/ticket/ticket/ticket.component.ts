@@ -20,7 +20,7 @@ export class TicketComponent implements OnInit {
   ticketmdoel : ticketmdoel = new ticketmdoel();
   ddlist : ddlist = new ddlist();
   Id :any;
-  errortype : number = 0;
+  errortype : number ;
   fileToUpload: File = null;
   userrole : any;
   adminrole :boolean=false;
@@ -57,11 +57,16 @@ export class TicketComponent implements OnInit {
             });
 
          this.errortype =  Number(this.ticketmdoel.errortype);
+
          if (this.errortype >0)
          {
              this.errorexist = true;
              console.log("errortyp");
              console.log(this.errorexist);
+         }
+         else
+         {
+            this.errortype = undefined;
          } 
          console.log(this.errortype)
      },error => {
@@ -228,7 +233,7 @@ updateticket()
             {
                 if (this.allclose)
                 {
-                    this._router.navigate(['/ticket/sendemail'],{ queryParams: { subject:this.ticketmdoel.emailsubject,ticketno:this.ticketmdoel.ticketno,emailbody:this.ticketmdoel.emailbody } });   
+                    this._router.navigate(['/ticket/sendemail'],{ queryParams: { subject:this.ticketmdoel.emailsubject,ticketno:this.ticketmdoel.ticketno,emailbody:this.ticketmdoel.emailbody,emailfrom:this.ticketmdoel.emailfrom,emailcc:this.ticketmdoel.emailcc,batchno:this.ticketmdoel.batchno}});   
                 }
                 else
                 {
@@ -259,8 +264,34 @@ onSubmit()
         alert("Please Accept the ticket First on Ticket Dashboard Page.");
         this._router.navigate(['/ticket/all']);
         return;
-     } 
+     }
+     
+     if (this.ticketmdoel.status=="Close")
+        {
+            this.TicketService.checkticketdata(this.ticketmdoel.ticketno)
+            .subscribe(
+            (data) => {
+                console.log(data);
+                if (data =='N')
+                {
+                    alert("Ticket Details are not entered. First Enter Ticket Details then Close the Ticket.")   
+                    return;
+                }
+                else
+                {
+                    this.updateticketdata();
+                }
+                },error => {
+                    alert(error);
+                    console.log("Error checkticketdata.", error);
+                });
+        }
+        else
+        {
+            this.updateticketdata();
+        }   
 
+     /*   
     this.ticketmdoel.errortype= this.errortype;
     console.log(this.ticketmdoel);
 
@@ -278,7 +309,6 @@ onSubmit()
                 if (confirm("Do You want to Send Auto Close Response?")) 
                 {
                     this.ticketmdoel.SendAutoCloseResponse='Y';
-                    //this._router.navigate(['/ticket/details/'+this.ticketmdoel.ticketno]);
                     this.updateticket()
                 } 
                 else
@@ -288,7 +318,6 @@ onSubmit()
             }
             else
             {
-                //this._router.navigate(['/ticket/details/'+this.ticketmdoel.ticketno]);
                 this.updateticket()
             }           
         },error => {
@@ -301,6 +330,50 @@ onSubmit()
     {
         this.updateticket();
     }
-}  
+    */
+}
+
+   updateticketdata()
+   {
+    this.ticketmdoel.errortype= this.errortype;
+    console.log(this.ticketmdoel);
+
+    this.ticketmdoel.SendAutoCloseResponse='N';
+
+    if (this.ticketmdoel.status=="Close")
+    {
+        this.TicketService.getticketclosecount(this.ticketmdoel.batchno)
+        .subscribe(
+        (data) => {
+            console.log(data);
+            if (data == "allclose")
+            {
+                this.allclose = true; 
+                if (confirm("Do You want to Send Auto Close Response?")) 
+                {
+                    this.ticketmdoel.SendAutoCloseResponse='Y';
+                    this.updateticket()
+                } 
+                else
+                {
+                    this.updateticket()
+                }
+            }
+            else
+            {
+                this.updateticket()
+            }           
+        },error => {
+            alert(error);
+            console.log("Error while sending accept email.", error);
+        });
+
+    }
+    else
+    {
+        this.updateticket();
+    }
+   }
+
 }
 

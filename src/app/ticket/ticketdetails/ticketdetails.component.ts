@@ -418,14 +418,31 @@ export class TicketdetailsComponent implements OnInit {
   
   onSubmit()
   {
-    console.log(8282);
-    console.log(this.listtd);
-
+    for (var td of this.listtd)
+    {
+      console.log(td);
+      console.log(td.pickupdate);
+      if (td.pickupdate == undefined || td.pickupdate == null || td.pickupdate =="")
+      {
+        alert("Pickup Date is Mandatory.");
+        return;
+      }
+    
+      if (Date.parse(td.pickupdate) >  new Date().getTime())
+      {
+        alert("Pickup Date Can not be greater than today.");
+        return;
+      }
+      
+      
+    }
+             
+    
     this.TicketService.InsertTiketDetails(this.listtd)
     .subscribe(
       (data) => {
           console.log(data);
-          alert("Data Saved Successfully.") 
+          alert("Data Saved Successfully."); 
           this._router.navigate(['/ticket/all']);
 
       },error => {

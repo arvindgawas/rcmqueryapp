@@ -39,6 +39,7 @@ export class ticketmdoel
     public modifieduser :string;
     public modifieddate :Date; 
     public company :string;
+    public rejectremark:string;
 }
 
 

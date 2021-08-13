@@ -18,18 +18,26 @@ export class SendemailComponent implements OnInit {
 
   email : email = new email();
   lstemail : email[];
-  
+  batchno : string; 
   constructor(public TicketService: TicketService, public _router : Router,private _routeParams: ActivatedRoute) 
   { 
-
     this._routeParams.queryParams.subscribe(params => {
       this.email.emailsubject1 = params['subject']
       this.email.ticketno = params['ticketno']
       this.email.filepath = params['emailbody']
+      this.email.toemailid = params['emailfrom']
+      this.email.ccemailid = params['emailcc']
+      this.batchno = params['batchno']
     });
   }
 
   ngOnInit() {
+    if (this.batchno!="" && this.batchno!=null && this.batchno != undefined)
+    {
+      this.email.emailsubject1  = "Closed-"+this.batchno + " " +this.email.emailsubject1 
+      this.email.emailbody = "Dear Sir/Madam,Your query has been closed vide batch no. " + this.batchno +
+                       " and detailed report attached for your quick reference. Please note the interaction number for future reference. This is an auto acknowledgement mail. Kindly do not reply to this mail. Regards,CMS Customer Service Team";
+    }
 
     this.TicketService.GetEmailHistory(this.email.ticketno)
     .subscribe(

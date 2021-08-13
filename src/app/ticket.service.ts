@@ -384,6 +384,19 @@ export class TicketService {
 
   }
 
+  public checkticketdata(ticketno : string)
+  {
+
+    console.log(ticketno);
+    let url= environment.apiEndpoint + "Ticket/checkticketdata";
+
+    const param = new HttpParams({});
+    const params = new HttpParams().set('ticketno', ticketno);
+
+    return this.http.get<string>(url,{params}).pipe(tap(data => data),
+    catchError(this.handleError));
+
+  }
   
 
   public GetAllTicketsfordate(datefilter : string,userid:string,userrole : string,filter :string)
