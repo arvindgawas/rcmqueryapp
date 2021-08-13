@@ -18,12 +18,14 @@ export class TicketcountComponent implements OnInit {
   ticketcount : ticketcount = new ticketcount();
   lstticketcount : ticketcount[];
   ticketdate :string;
+  tickettodate : string;
   userdata : any ;
   userrole :any ;
   adminrole :boolean=false;
   constructor(public TicketService : TicketService,private _routeParams: ActivatedRoute) { 
     this._routeParams.queryParams.subscribe(params => {
       this.ticketdate = params['ticketdate']
+      this.tickettodate = params['tickettodate']
     });
   }
 
@@ -39,7 +41,7 @@ export class TicketcountComponent implements OnInit {
         this.adminrole =true;
     }
     
-     this.TicketService.getdashboardcount(this.userdata.name ,this.ticketdate.toString(),this.userrole.userrole)
+     this.TicketService.getdashboardcount(this.userdata.name ,this.ticketdate.toString(),this.tickettodate.toString(),this.userrole.userrole)
     .subscribe(
        (data) => {
            console.log(data)

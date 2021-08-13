@@ -19,11 +19,13 @@ export class TicketdashComponent implements OnInit {
   lstqbank: ticketmdoel[]=[];
   lstaccepttickets: ticketmdoel[]=[];
   ticketdatefilter: Date = new Date();
+  tickettodate: Date = new Date();
   sdate : string;
   dataSource: any;
   userdata : any ;
   userrole : any ;
   datefilter : any;
+  datetofilter : any;
   filter : string="";
   fileToUpload: File = null;
   adminrole :boolean=false;
@@ -45,7 +47,7 @@ export class TicketdashComponent implements OnInit {
 
   AllPendng()
   {
-    this.TicketService.GetAllTicketsfordate("",this.userdata.name,this.userrole.userrole,this.filter)
+    this.TicketService.GetAllTicketsfordate("","",this.userdata.name,this.userrole.userrole,this.filter)
     //this.TicketService.GetAllTickets(this.userdata.name,this.userrole.userrole)
      .subscribe(
        (data) => {
@@ -74,6 +76,7 @@ export class TicketdashComponent implements OnInit {
     this.userdata = JSON.parse(localStorage.getItem('currentUser'));
     this.userrole = JSON.parse(localStorage.getItem('userrole'));
     this.datefilter = JSON.parse(localStorage.getItem('datefilter'));
+    this.datetofilter = JSON.parse(localStorage.getItem('todate'));
     if (this.userrole.userrole == 'admin')
     {
         this.adminrole =true;
@@ -83,9 +86,11 @@ export class TicketdashComponent implements OnInit {
       this.adminrole =false;
     }
     this.datefilter.datefilter = formatDate(this.datefilter.datefilter, 'yyyy/MM/dd', 'en');
+    this.datetofilter.todate = formatDate(this.datetofilter.todate, 'yyyy/MM/dd', 'en');
     this.ticketdatefilter = this.datefilter.datefilter;
+    this.tickettodate = this.datetofilter.todate;
     //alert(this.datefilter.datefilter);
-    this.TicketService.GetAllTicketsfordate(this.datefilter.datefilter,this.userdata.name,this.userrole.userrole,this.filter)
+    this.TicketService.GetAllTicketsfordate(this.datefilter.datefilter,this.datetofilter.todate,this.userdata.name,this.userrole.userrole,this.filter)
     //this.TicketService.GetAllTickets(this.userdata.name,this.userrole.userrole)
      .subscribe(
        (data) => {
@@ -115,7 +120,8 @@ export class TicketdashComponent implements OnInit {
 
     onFocusOutEvent(){
       localStorage.setItem('datefilter', JSON.stringify({ datefilter: this.ticketdatefilter.toString()}));
-      this.TicketService.GetAllTicketsfordate(this.ticketdatefilter.toString(),this.userdata.name,this.userrole.userrole,this.filter)
+      localStorage.setItem('todate', JSON.stringify({ todate: this.tickettodate.toString()}));
+      this.TicketService.GetAllTicketsfordate(this.ticketdatefilter.toString(),this.tickettodate.toString(),this.userdata.name,this.userrole.userrole,this.filter)
      .subscribe(
        (data) => {
            console.log(data);
@@ -131,7 +137,27 @@ export class TicketdashComponent implements OnInit {
   
       }
 
-    
+      onFocusOutTodate()
+      {
+        localStorage.setItem('datefilter', JSON.stringify({ datefilter: this.ticketdatefilter.toString()}));
+        localStorage.setItem('todate', JSON.stringify({ todate: this.tickettodate.toString()}));
+      this.TicketService.GetAllTicketsfordate(this.ticketdatefilter.toString(),this.tickettodate.toString(),this.userdata.name,this.userrole.userrole,this.filter)
+     .subscribe(
+       (data) => {
+           console.log(data);
+           this.lstqbank = data;
+           this.dataSource = new MatTableDataSource(this.lstqbank );
+           this.dataSource.sort = this.sort;
+           this.dataSource.paginator = this.paginator;
+           
+       },error => {
+           alert(error);
+           console.log("Error getting all tickets.", error);
+       });
+
+      }
+
+
       ProcessTAT()
       {
         this.TicketService.ProcessTAT(this.ticketdatefilter.toString())

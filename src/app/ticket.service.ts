@@ -176,7 +176,7 @@ export class TicketService {
   }
   
 
-  public getdashboardcount(userid : string, dtticketdate : string,adminuser:string )
+  public getdashboardcount(userid : string, dtticketdate : string,todate:string,adminuser:string )
   {
 
     let url :string;
@@ -189,8 +189,9 @@ export class TicketService {
     {
       url= environment.apiEndpoint+"ticket/getdashboardcount";
     }
+    
     const param = new HttpParams({});
-    const params = new HttpParams().set('userid', userid).set('dtticketdate', dtticketdate);
+    const params = new HttpParams().set('userid', userid).set('dtticketdate', dtticketdate).set('todate', todate);;
 
     return this.http.get<ticketcount[]>(url,{params}).pipe(tap(data => data),
     catchError(this.handleError));
@@ -399,7 +400,7 @@ export class TicketService {
   }
   
 
-  public GetAllTicketsfordate(datefilter : string,userid:string,userrole : string,filter :string)
+  public GetAllTicketsfordate(datefilter : string,todate:string,userid:string,userrole : string,filter :string)
   {
     console.log(datefilter);
     console.log(userid);
@@ -407,7 +408,7 @@ export class TicketService {
     let url= environment.apiEndpoint + "Ticket/GetAllTicketsfordate";
 
     const param = new HttpParams({});
-    const params = new HttpParams().set('datefilter', datefilter).set('userid', userid).set('userrole',userrole).set('filter',filter);
+    const params = new HttpParams().set('datefilter', datefilter).set('todate',todate).set('userid', userid).set('userrole',userrole).set('filter',filter);
 
     return this.http.get<ticketmdoel[]>(url,{params}).pipe(tap(data => data),
     catchError(this.handleError));

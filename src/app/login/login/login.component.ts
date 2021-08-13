@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('userrole');
     localStorage.removeItem('datefilter');
+    localStorage.removeItem('todate');
   }
 
   onSubmit() {
@@ -48,6 +49,7 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem('currentUser', JSON.stringify({ name: this.LoginModel.UserId }));
                 localStorage.setItem('userrole', JSON.stringify({ userrole: this.LoginModel.userrole }));
                 localStorage.setItem('datefilter', JSON.stringify({ datefilter: new Date()}));
+                localStorage.setItem('todate', JSON.stringify({ todate: new Date()}));
 
                 this.valloginser.validateLoginUser();
                 this.valloginser.toggle();
