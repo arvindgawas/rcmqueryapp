@@ -28,13 +28,17 @@ export class UploadComponent implements OnInit {
    this.TicketService.downloadDocFile(this.filepath,this.filename);
  }
 
- downloadDocFileClose()
+ downloadDocFileCloseOld()
  {
   this.filepath ="F:/rcmquery/uploadtemplates/ticketclosure.xls";
   this.filename = 'ticketclosure.xls';
    this.TicketService.downloadDocFile(this.filepath,this.filename);
  }
 
+ downloadDocFileClose()
+  {
+       this.TicketService.downloadExcelFileClose();
+  }
 
   onFileChange(event) {
     if (event.target.files.length > 0) {

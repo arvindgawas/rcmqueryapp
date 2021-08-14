@@ -91,6 +91,20 @@ export class TicketService {
      })
   }
 
+  downloadExcelFileClose()
+  {
+    let url= environment.apiEndpoint+"ticket/getbulkclosedata";
+    const options = { responseType: 'blob' as 'blob'};
+    this.http.get(url,options)
+     .subscribe((Response)=>{
+       var a = document.createElement("a");
+       let blob = new Blob([Response], { type: "application/octet-stream"});
+       a.href = URL.createObjectURL(blob);
+       a.download = "ticketclosure.xls";
+       a.click();
+     })
+  }
+
   downloadExcelFile(report  : report)
   {
     let url= environment.apiEndpoint+"ticket/Downloadexelfile";
