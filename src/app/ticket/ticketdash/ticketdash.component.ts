@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { ticketmdoel} from '../../model/ticketmodel'
 import {TicketService} from '../../ticket.service';
+import {ddlisttracker,customer,User} from '../../model/reportddlist';
 import { Router,ActivatedRoute } from '@angular/router';
 import {formatDate} from '@angular/common';
 
@@ -16,6 +17,8 @@ import {formatDate} from '@angular/common';
 
 export class TicketdashComponent implements OnInit {
 
+  pageno : string;
+  pagesize : string;
   lstqbank: ticketmdoel[]=[];
   lstaccepttickets: ticketmdoel[]=[];
   ticketdatefilter: Date = new Date();
@@ -29,20 +32,29 @@ export class TicketdashComponent implements OnInit {
   filter : string="";
   fileToUpload: File = null;
   adminrole :boolean=false;
+  ddlisttracker : ddlisttracker = new ddlisttracker();
   @ViewChild(MatSort,{static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
     public batchno: string;
     public rejectremark:string;
-  displayedColumns: string[] = ['batchno','ticketno','ticketdate','tickettype','bank','pickupcode','clientcode','emailsubject','acceptstatus','rejectremark','oldbatchno','status','assignedto','EditAction']
+  displayedColumns: string[] = ['select','batchno','ticketno','ticketdate','tickettype','bank','crnno','pickupcode','clientcode','emailsubject','acceptstatus','rejectremark','oldbatchno','status','assignedto','EditAction']
   
  //,'bank' ,'ticketamount','status','actiontaken','hublocation','location','region','area','client','crnno','clientcode',];
+ //,'DeleteAction'
 
   constructor(public TicketService: TicketService, public _router : Router,private _routeParams: ActivatedRoute) { 
 
     this._routeParams.queryParams.subscribe(params => {
       this.filter = params['filter']
     });
+  }
+
+  ticketedit()
+  {
+    localStorage.setItem('pageno', this.dataSource.paginator.pageIndex);
+    localStorage.setItem('pagesize', this.dataSource.paginator.pageSize);
+
   }
 
   AllPendng()
@@ -72,11 +84,20 @@ export class TicketdashComponent implements OnInit {
 
   }
 
+  Refresh()
+  {
+    localStorage.setItem('pageno', "0");
+    localStorage.setItem('pagesize', "5");
+    this.ngOnInit();
+  }
+
   ngOnInit() {
     this.userdata = JSON.parse(localStorage.getItem('currentUser'));
     this.userrole = JSON.parse(localStorage.getItem('userrole'));
     this.datefilter = JSON.parse(localStorage.getItem('datefilter'));
     this.datetofilter = JSON.parse(localStorage.getItem('todate'));
+    this.pageno = localStorage.getItem('pageno')
+    this.pagesize = localStorage.getItem('pagesize')
     if (this.userrole.userrole == 'admin')
     {
         this.adminrole =true;
@@ -108,10 +129,23 @@ export class TicketdashComponent implements OnInit {
            {
              this.applyFilter(this.filter);
            }  
+           this.dataSource.paginator.pageIndex = this.pageno;
+           this.dataSource.paginator.pageSize = this.pagesize;
+           this.dataSource.paginator = this.paginator;
        },error => {
            alert(error);
            console.log("Error getting all tickets.", error);
        });
+       this.TicketService.gettrackerddlist()
+       .subscribe(
+          (data) => {
+              console.log(data)
+              this.ddlisttracker = data;
+          },error => {
+              alert(error);
+              console.log("Error getting dashboard count.", error);
+          });
+
   }
 
   applyFilter(filterValue: string) {
@@ -170,8 +204,21 @@ export class TicketdashComponent implements OnInit {
        });
       }
 
-  Delete(QBID:Number)
+  Delete(ticketno:string)
   {
+    if (confirm("Do You want to Delete this Ticket?")) 
+    {
+       this.TicketService.DeleteTicket(ticketno)
+      .subscribe(
+      (data) => {
+          alert("Ticekt Deleted Successfully.");
+          this.ngOnInit();
+          console.log(data);
+      },error => {
+          alert(error);
+          console.log("Error Dleteting ticket.", error);
+      });
+    }  
   }
 
   edited(element : ticketmdoel)
@@ -193,16 +240,41 @@ export class TicketdashComponent implements OnInit {
 
   }
 
+  editedselet(element : ticketmdoel)
+  {
+    console.log(222222);
+    console.log(element);
+
+    if (this.lstaccepttickets.some((a => a.ticketno ==  element.ticketno)) )
+    {
+      
+      this.lstaccepttickets = this.lstaccepttickets.filter( a=> a.ticketno != element.ticketno);
+
+      if (element.select)
+      {
+        this.lstaccepttickets.push(element);
+      }
+
+    }
+    else
+    {
+      this.lstaccepttickets.push(element);
+    }
+
+    console.log(this.lstaccepttickets);  
+
+  }
+
   acceptsubmit()
   {
 
     for (var ti of this.lstaccepttickets)
     {
-      if (ti.acceptstatus=="Reject")
+      if ((ti.acceptstatus=="Reject") || (ti.acceptstatus=="Duplicate"))
       {
         if (ti.rejectremark == undefined || ti.rejectremark == null || ti.rejectremark =="")
       {
-        alert("Reject Reamrk is Mandatory.");
+        alert("Reamrk is Mandatory.");
         return;
       }
       } 
@@ -220,4 +292,25 @@ export class TicketdashComponent implements OnInit {
       });
 
   }
+
+  DeleteSubmit()
+  {
+    if (this.lstaccepttickets.length > 0 )
+    {
+      if (confirm("Are You Sure to Delete these Tickets?")) 
+      {
+        this.TicketService.DeleteTicketAll(this.lstaccepttickets)
+        .subscribe(
+          (data) => {
+              alert("Deleted Successfully.");
+              this.ngOnInit();
+              console.log(data);
+          },error => {
+              alert(error);
+              console.log("Error getting all tickets.", error);
+          });
+      } 
+    }
+  }
+
 }

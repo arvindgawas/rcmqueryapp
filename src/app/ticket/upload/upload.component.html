@@ -6,12 +6,16 @@
         <form #f="ngForm" novalidate >
             <div class="row">
 
-                <div class="col-md-4">
-
+                <div class="col-md-3">
                     <label >Bulk Tickets Upload</label>
+                    <input type="file" class="form-control" name="fileupload" (change)="onFileChange($event)" > 
+                </div>
 
-                    <input type="file" class="form-control" name="fileupload"  (change)="onFileChange($event)"> 
-
+                <div class="col-md-1">
+                    <label >Submit</label>
+                    <button type="button" (click)="onFileSubmit()" class="btn btn-success" >  
+                        Submit   
+                    </button>
                 </div>
 
                 <div class="col-md-2">
@@ -21,12 +25,19 @@
                     </button>  
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
 
                     <label >Bulk Tickets Closure</label>
 
-                    <input type="file" class="form-control" name="fileuploadclose"  (change)="onFileChangeClose($event)"> 
+                    <input type="file" class="form-control" name="fileuploadclose" (change)="onFileChangeClose($event)" > 
 
+                </div>
+
+                <div class="col-md-1">
+                    <label >Submit</label>
+                    <button type="button" (click)="onCloseSubmit()" class="btn btn-success" >  
+                        Submit   
+                    </button>
                 </div>
 
                 <div class="col-md-2">

@@ -25,6 +25,8 @@ export class LoginComponent implements OnInit {
     localStorage.removeItem('userrole');
     localStorage.removeItem('datefilter');
     localStorage.removeItem('todate');
+    localStorage.removeItem('pageno');
+    localStorage.removeItem('pagesize');
   }
 
   onSubmit() {
@@ -50,7 +52,8 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem('userrole', JSON.stringify({ userrole: this.LoginModel.userrole }));
                 localStorage.setItem('datefilter', JSON.stringify({ datefilter: new Date()}));
                 localStorage.setItem('todate', JSON.stringify({ todate: new Date()}));
-
+                localStorage.setItem('pageno', "0");
+                localStorage.setItem('pagesize', "5");
                 this.valloginser.validateLoginUser();
                 this.valloginser.toggle();
                 this.router.navigate(['/ticket/all']);

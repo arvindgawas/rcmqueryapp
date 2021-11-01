@@ -54,7 +54,9 @@ export class AddticketComponent implements OnInit {
          this.ticketmdoel.hublocation = data.hublocation
          this.ticketmdoel.area = data.area
          this.ticketmdoel.cdpncm = data.cdpncm
-         
+         this.ticketmdoel.customertype = data.customertype
+         this.ticketmdoel.hierarchycode = data.hierarchycode
+         this.ticketmdoel.company = data.Company
      },error => {
          alert(error);
          console.log("Error getting dashboard count.", error);
@@ -66,11 +68,16 @@ export class AddticketComponent implements OnInit {
     onCrnOutEvent(event: any){
 
       console.log(event.target.value);
-      this.TicketService.Getrcmdata(this.ticketmdoel.crnno,this.ticketmdoel.clientcode )
+      if (this.ticketmdoel.crnno != "undefined" && this.ticketmdoel.crnno != null) 
+      //&& this.ticketmdoel.clientcode !="undefined"  && this.ticketmdoel.clientcode !=null)
+      {
+        
+      this.TicketService.Getrcmdatamanual(this.ticketmdoel.crnno,this.ticketmdoel.clientcode )
       .subscribe(
        (data) => {
            console.log(data)
            this.ticketmdoel.pickupcode = data.pickupcode;
+           this.ticketmdoel.clientcode = data.clientcode;
            this.ticketmdoel.client = data.clientname
            this.ticketmdoel.region = data.region
            this.ticketmdoel.location = data.location
@@ -79,12 +86,14 @@ export class AddticketComponent implements OnInit {
            this.ticketmdoel.cdpncm = data.cdpncm
            this.ticketmdoel.customertype = data.customertype
            this.ticketmdoel.hierarchycode = data.hierarchycode
+           this.ticketmdoel.bank = data.customer
        },error => {
            alert(error);
            console.log("Error getting dashboard count.", error);
        });
  
       }
+    }  
   onSubmit()
   {
     console.log(this.ticketmdoel);

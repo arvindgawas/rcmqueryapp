@@ -87,6 +87,23 @@ export class TicketdetailsComponent implements OnInit {
         ticketdetails.soleid="NA";
         ticketdetails.bankbranchlocation="NA";
       }
+      else if (this.ticketmdoel.errortype==2)
+    {
+      this.ticketdetails.wronghcin='NA';
+      ticketdetails.soleid="NA";
+      ticketdetails.bankbranchlocation="NA";
+    }
+    else if (this.ticketmdoel.errortype==3)
+    {
+      this.ticketdetails.soleid="NA";
+      this.ticketdetails.bankbranchlocation="NA";
+    }
+    else if (this.ticketmdoel.errortype==4)
+    {
+      this.ticketdetails.wronghcin='NA';
+      this.ticketdetails.soleid="NA";
+      this.ticketdetails.bankbranchlocation="NA";
+    }
       else if (this.ticketmdoel.errortype==5)
       {
         ticketdetails.wronghcin='NA';
@@ -106,8 +123,6 @@ export class TicketdetailsComponent implements OnInit {
         ticketdetails.wrongcustomeruniquecode="NA";
         ticketdetails.soleid="NA";
         ticketdetails.bankbranchlocation="NA";
-
-
       }
       else if (this.ticketmdoel.errortype==7)
       {
@@ -199,7 +214,7 @@ export class TicketdetailsComponent implements OnInit {
       this.ticketdetails.clientcode=this.ticketmdoel.clientcode;
       this.ticketdetails.pickupcode=this.ticketmdoel.pickupcode;
       this.ticketdetails.customeruniquecode='';
-      this.ticketdetails.wronghcin='';
+      this.ticketdetails.wronghcin='NA';
       this.ticketdetails.actualhcin='';
       this.ticketdetails.wrongdispis='';
       this.ticketdetails.actualdispis='';
@@ -249,7 +264,7 @@ export class TicketdetailsComponent implements OnInit {
       this.ticketdetails.clientcode=this.ticketmdoel.clientcode;
       this.ticketdetails.pickupcode=this.ticketmdoel.pickupcode;
       this.ticketdetails.customeruniquecode='';
-      this.ticketdetails.wronghcin='';
+      this.ticketdetails.wronghcin='NA';
       this.ticketdetails.actualhcin='';
       this.ticketdetails.wrongdispis='';
       this.ticketdetails.actualdispis='';
@@ -415,6 +430,12 @@ export class TicketdetailsComponent implements OnInit {
     }
     console.log(this.listtd);
   }
+
+  deleterow(index:number)
+  {
+      this.listtd.splice(index,1);
+     console.log(this.listtd);
+  }
   
   onSubmit()
   {
@@ -443,12 +464,15 @@ export class TicketdetailsComponent implements OnInit {
       (data) => {
           console.log(data);
           alert("Data Saved Successfully."); 
-          this._router.navigate(['/ticket/all']);
+          this._router.navigate(['/ticket/edit/'+this.Id]);
 
       },error => {
           alert(error);
           console.log("Error Saving Ticket Data.", error);
       });
+
+      
+
     }
 
 

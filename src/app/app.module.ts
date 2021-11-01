@@ -12,6 +12,7 @@ import {
 import { NavigationComponent } from './navigation/navigation.component';
 import { HttpRequestInterceptor } from './HttpRequestInterceptor';
 import { DatePipe } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
  
 
 @NgModule({
@@ -37,7 +38,8 @@ import { DatePipe } from '@angular/common';
   ],
   providers: [DatePipe,
       { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true },
-      {provide: MAT_DATE_LOCALE, useValue:  'en-IN'}
+      {provide: MAT_DATE_LOCALE, useValue:  'en-IN'},
+      {provide: LocationStrategy, useClass: HashLocationStrategy},
   ],
   bootstrap: [AppComponent],
 

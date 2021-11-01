@@ -22,6 +22,8 @@ export class TicketComponent implements OnInit {
   Id :any;
   errortype : number ;
   fileToUpload: File = null;
+  fileToUpload1: File = null;
+  fileToUpload2: File = null;
   userrole : any;
   adminrole :boolean=false;
   errorexist : boolean=false;
@@ -142,6 +144,7 @@ export class TicketComponent implements OnInit {
          (data) => {
              console.log(data)
              this.ticketmdoel.pickupcode = data.pickupcode;
+             this.ticketmdoel.clientcode = data.clientcode;
              this.ticketmdoel.client = data.clientname
              this.ticketmdoel.region = data.region
              this.ticketmdoel.location = data.location
@@ -162,8 +165,47 @@ export class TicketComponent implements OnInit {
  onFileChange(event) {
         if (event.target.files.length > 0) {
           this.fileToUpload = event.target.files[0];
+            this.TicketService.postFile(this.fileToUpload,this.ticketmdoel.ticketno)
+            .subscribe(
+            (data) => {
+                console.log(data)           
+                },error => {
+                    alert(error);
+                    console.log("Error while uploading file.", error);
+                });
+
         }
- }
+    }
+
+ onFileChange1(event) {
+    if (event.target.files.length > 0) {
+      this.fileToUpload1 = event.target.files[0];
+          this.TicketService.postFile1(this.fileToUpload1,this.ticketmdoel.ticketno)
+          .subscribe(
+          (data) => {
+              console.log(data)           
+          },error => {
+              alert(error);
+              console.log("Error while uploading file.", error);
+          });
+    }
+}
+
+onFileChange2(event) {
+    if (event.target.files.length > 0) {
+      this.fileToUpload2 = event.target.files[0];
+          this.TicketService.postFile2(this.fileToUpload2,this.ticketmdoel.ticketno)
+          .subscribe(
+          (data) => {
+              console.log(data)           
+          },error => {
+              alert(error);
+              console.log("Error while uploading file.", error);
+          });
+
+    }
+}
+
 
  downloadDocFile(filepath : string,filename : string)
  {
@@ -183,8 +225,18 @@ export class TicketComponent implements OnInit {
 downloadEmailBody(filepath : string,filename : string,ticketno : string)
 {
     let extn = filename.substr(-5,5);
-    let filep = filepath.replace('Z:/','//172.19.100.157/nfsrmsuat/')
+    //let filep = filepath.replace('Z:/','//172.19.100.157/nfsrmsuat/')
+    let filep = filepath.replace('Z:/','//rcmticketfsstoacc.file.core.windows.net/rcmticketfileshare/')
     let filen = "EmailBody"+ticketno+extn;
+    this.TicketService.downloadDocFile(filep,filen);
+}
+
+downloadEmailAttachment(filepath : string,filename : string,ticketno : string)
+{
+    let extn = filename.substr(-5,5);
+    //let filep = filepath.replace('Z:/','//172.19.100.157/nfsrmsuat/')
+    let filep = filepath.replace('Z:/','//rcmticketfsstoacc.file.core.windows.net/rcmticketfileshare/')
+    let filen = "EmailAttachemnt"+ticketno+extn;
     this.TicketService.downloadDocFile(filep,filen);
 }
 
@@ -207,6 +259,11 @@ SendCloseResponse()
     
  }
 
+ SendManualCloseResponse()
+ {
+    let stremailfrom = this.ticketmdoel.emailfrom +  "," + this.ticketmdoel.emailto.replace("rcm.opsquery@cms.com","");
+    this._router.navigate(['/ticket/sendemail'],{ queryParams: { subject:this.ticketmdoel.emailsubject,ticketno:this.ticketmdoel.ticketno,emailbody:this.ticketmdoel.emailbody,emailfrom:stremailfrom,emailcc:this.ticketmdoel.emailcc,batchno:this.ticketmdoel.batchno,emailattachment:this.ticketmdoel.emailattachment,closecommit:'N'}});   
+ }
 
 updateticket()
 {
@@ -215,25 +272,15 @@ updateticket()
       (data) => {
           console.log(data);
           alert("Data Saved Successfully.") 
-        if (this.fileToUpload != null)
-        {
-            this.TicketService.postFile(this.fileToUpload,this.ticketmdoel.ticketno)
-            .subscribe(
-            (data) => {
-                console.log(data)           
-            },error => {
-                alert(error);
-                console.log("Error while uploading file.", error);
-            });
-        }
-
+        
         if (this.ticketmdoel.status=="Close")
         {
             if (this.ticketmdoel.SendAutoCloseResponse=='N')
             {
                 if (this.allclose)
                 {
-                    this._router.navigate(['/ticket/sendemail'],{ queryParams: { subject:this.ticketmdoel.emailsubject,ticketno:this.ticketmdoel.ticketno,emailbody:this.ticketmdoel.emailbody,emailfrom:this.ticketmdoel.emailfrom,emailcc:this.ticketmdoel.emailcc,batchno:this.ticketmdoel.batchno}});   
+                    let stremailfrom = this.ticketmdoel.emailfrom +  "," + this.ticketmdoel.emailto.replace("rcm.opsquery@cms.com","");
+                    this._router.navigate(['/ticket/sendemail'],{ queryParams: { subject:this.ticketmdoel.emailsubject,ticketno:this.ticketmdoel.ticketno,emailbody:this.ticketmdoel.emailbody,emailfrom:stremailfrom,emailcc:this.ticketmdoel.emailcc,batchno:this.ticketmdoel.batchno,emailattachment:this.ticketmdoel.emailattachment,closecommit:'Y'}});   
                 }
                 else
                 {
@@ -246,8 +293,22 @@ updateticket()
             }
         }
         else
-        {              
-            this._router.navigate(['/ticket/details/'+this.ticketmdoel.ticketno]);
+        {   
+            if (this.ticketmdoel.errortype !=undefined)
+            {     
+                 //alert(this.ticketmdoel.mistakedoneby);   
+                if (this.ticketmdoel.mistakedoneby =='' || this.ticketmdoel.mistakedoneby ==null || this.ticketmdoel.mistakedoneby ==undefined)    
+                {
+                    alert('Please Enter Mistake done by.');
+                    return;
+                }
+                this._router.navigate(['/ticket/details/'+this.ticketmdoel.ticketno]); 
+            }
+            else
+            {
+                this._router.navigate(['/ticket/all']);
+            }
+            
         }
       },error => {
           alert(error);
@@ -291,7 +352,61 @@ onSubmit()
             this.updateticketdata();
         }   
 
-     /*   
+     
+}
+
+   updateticketdata()
+   {
+    this.ticketmdoel.errortype= this.errortype;
+    console.log(this.ticketmdoel);
+
+    this.ticketmdoel.SendAutoCloseResponse='N';
+
+    if (this.ticketmdoel.status=="Close")
+    {
+        this.TicketService.getticketclosecount(this.ticketmdoel.batchno)
+        .subscribe(
+        (data) => {
+            console.log(data);
+            if (data == "allclose")
+            {
+                this.allclose = true; 
+
+                this.updateticket()
+
+                /*
+                if (confirm("Do You want to Send Auto Close Response?")) 
+                {
+                    this.ticketmdoel.SendAutoCloseResponse='Y';
+                    this.updateticket()
+                } 
+                else
+                {
+                    this.updateticket()
+                }
+                */
+            }
+            else
+            {
+                this.updateticket()
+            }           
+        },error => {
+            alert(error);
+            console.log("Error while sending accept email.", error);
+        });
+
+    }
+    else
+    {
+        this.updateticket();
+    }
+   }
+
+}
+
+
+
+/*   
     this.ticketmdoel.errortype= this.errortype;
     console.log(this.ticketmdoel);
 
@@ -331,49 +446,3 @@ onSubmit()
         this.updateticket();
     }
     */
-}
-
-   updateticketdata()
-   {
-    this.ticketmdoel.errortype= this.errortype;
-    console.log(this.ticketmdoel);
-
-    this.ticketmdoel.SendAutoCloseResponse='N';
-
-    if (this.ticketmdoel.status=="Close")
-    {
-        this.TicketService.getticketclosecount(this.ticketmdoel.batchno)
-        .subscribe(
-        (data) => {
-            console.log(data);
-            if (data == "allclose")
-            {
-                this.allclose = true; 
-                if (confirm("Do You want to Send Auto Close Response?")) 
-                {
-                    this.ticketmdoel.SendAutoCloseResponse='Y';
-                    this.updateticket()
-                } 
-                else
-                {
-                    this.updateticket()
-                }
-            }
-            else
-            {
-                this.updateticket()
-            }           
-        },error => {
-            alert(error);
-            console.log("Error while sending accept email.", error);
-        });
-
-    }
-    else
-    {
-        this.updateticket();
-    }
-   }
-
-}
-

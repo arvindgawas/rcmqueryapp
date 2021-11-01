@@ -129,6 +129,9 @@
                             <input style="width: 150px;" type="date"  name="depositiondate-{{index}}" [ngModel]="ticketdetails.depositiondate|date:'yyyy-MM-dd'" (ngModelChange)="ticketdetails.depositiondate=$event" maxlength="50"
                             #refdepositiondate="ngModel"  id="depositiondate" >
                         </td>
+                        <td>
+                            <button type="button"    (click)="deleterow(index)">Delete</button>
+                        </td>
                 </tr>
             </table>
 
@@ -138,6 +141,9 @@
                     <button type="button"  style="margin-left: 10px;margin-top: 10px;margin-bottom: 10px" class="btn btn-info" (click)="addrow()">Add Row</button>
                     <a style="margin-left: 10px; margin-top:10px;margin-bottom: 10px" class="btn btn-info" [routerLink]="['/ticket/all']">
                         Ticket Dashboard 
+                    </a>
+                    <a style="margin-left: 10px; margin-top:10px;margin-bottom: 10px" class="btn btn-info" [routerLink]="['/ticket/edit/',Id]">
+                        Back 
                     </a>
                 </div>
             </div>

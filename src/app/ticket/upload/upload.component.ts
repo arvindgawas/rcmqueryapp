@@ -23,7 +23,8 @@ export class UploadComponent implements OnInit {
 
   downloadDocFile()
  {
-  this.filepath ="F:/rcmquery/uploadtemplates/crnupload.xls";
+  //this.filepath ="F:/rcmquery/uploadtemplates/crnupload.xls";
+  this.filepath = "E:/productionapps/rcmquery/uploadtemplates/crnupload.xls";
   this.filename = 'crnupload.xls';
    this.TicketService.downloadDocFile(this.filepath,this.filename);
  }
@@ -45,6 +46,11 @@ export class UploadComponent implements OnInit {
       this.fileToUpload = event.target.files[0];
     }
 
+    
+  } 
+
+  onFileSubmit()
+  {
     this.TicketService.postExcelFile(this.fileToUpload)
         .subscribe(
         (data) => {
@@ -55,24 +61,57 @@ export class UploadComponent implements OnInit {
             alert(error);
             console.log("Error while uploading file.", error);
         });
-  }  
+  }
+  
+  
 
   onFileChangeClose(event) {
     if (event.target.files.length > 0) {
       this.fileToUpload = event.target.files[0];
     }
 
-    this.TicketService.postExcelFileClose(this.fileToUpload)
-        .subscribe(
-        (data) => {
-           alert("Data Uploaded Successfully.");
-           this.ngOnInit();
-            console.log(data)           
-        },error => {
-            alert(error);
-            console.log("Error while uploading file.", error);
-        });
   }  
+
+  onCloseSubmit()
+  {
+    this.TicketService.postExcelFileClose(this.fileToUpload)
+    .subscribe(
+    (data) => {
+      if (data =="Close")
+      {
+        alert("This Batch is Already Closed.");
+      }  
+      else if (data =="Batch")
+      {
+        alert("Batch No & Ticket No Mismatch.");
+      }
+      else if (data =="Ticket")
+      {
+        alert("Ticket No Mismatch.");
+      }
+      else if (data =="CRN")
+      {
+        alert("Ticket CRN No Mismatch.");
+      }
+      else if (data =="Accept")
+      {
+        alert("Ticket is not Accepted yet. Only Accepted Ticket can be closed.");
+      }
+      else
+      {
+        alert("Data Uploaded Successfully.");
+      }
+       this.ngOnInit();
+       console.log(data)           
+    },error => {
+        alert(error);
+        console.log("Error while uploading file.", error);
+    });
+
+  }
+
+
+  
 
 
 }

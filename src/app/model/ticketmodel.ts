@@ -2,6 +2,7 @@ import { Time } from '@angular/common';
 
 export class ticketmdoel
 {
+    public select: boolean;
     public ticketno: string;
     public ticketdate: Date;
     public tickettime: Time;
@@ -14,7 +15,9 @@ export class ticketmdoel
     public emailsubject:string;
     public emailfrom:string;
     public emailbody:string;
+    public emailattachment:string;
     public emailcc:string;
+    public emailto:string;
     public bank:string;
     public pickupcode:string;
     public clientcode:string;
@@ -33,6 +36,10 @@ export class ticketmdoel
     public status:string;
     public filepath:string;
     public filename:string;
+    public filepath1:string;
+    public filename1:string;
+    public filepath2:string;
+    public filename2:string;
     public SendAutoCloseResponse:string='N';
     public createduser :string;
     public createddate :Date;

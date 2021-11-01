@@ -38,7 +38,27 @@ export class TicketService {
     catchError(this.handleError));
   }
 
-  postExcelFileClose(fileToUpload: File): Observable<boolean> 
+  postFile1(fileToUpload: File,ticketno:string): Observable<boolean> 
+  {
+    let url= environment.apiEndpoint+"ticket/UploadFile1";
+        const formData: FormData = new FormData();
+    formData.append('fileKey', fileToUpload, fileToUpload.name);
+    formData.append('ticketno', ticketno); 
+    return this.http.post<any>(url,formData).pipe(tap(data => data),
+    catchError(this.handleError));
+  }
+  
+  postFile2(fileToUpload: File,ticketno:string): Observable<boolean> 
+  {
+    let url= environment.apiEndpoint+"ticket/UploadFile2";
+        const formData: FormData = new FormData();
+    formData.append('fileKey', fileToUpload, fileToUpload.name);
+    formData.append('ticketno', ticketno); 
+    return this.http.post<any>(url,formData).pipe(tap(data => data),
+    catchError(this.handleError));
+  }
+
+  postExcelFileClose(fileToUpload: File) 
   {
     let url= environment.apiEndpoint+"ticket/UploadBulkTickeClose";
      const formData: FormData = new FormData();
@@ -399,6 +419,18 @@ export class TicketService {
 
   }
 
+  DeleteTicket(ticketno:string)
+  {
+    let url= environment.apiEndpoint + "Ticket/DeleteTicket";
+
+    const param = new HttpParams({});
+    const params = new HttpParams().set('ticketno', ticketno);
+
+    return this.http.delete<any>(url,{params}).pipe(tap(data => data),
+    catchError(this.handleError));
+
+  }
+
   public checkticketdata(ticketno : string)
   {
 
@@ -441,6 +473,16 @@ export class TicketService {
   public Getrcmdata(crnno : string,clientcode : string)
   {
     let url= environment.apiEndpoint +"Ticket/getrcmdata/"
+
+    const param = new HttpParams({});
+    const params = new HttpParams().set('crnno', crnno).set('clientcode',clientcode);
+    return this.http.get<rcmdetail>(url, {params}).pipe(tap(data => data),
+    catchError(this.handleError));
+  }
+
+  public Getrcmdatamanual(crnno : string,clientcode : string)
+  {
+    let url= environment.apiEndpoint +"Ticket/getrcmdatamanual/"
 
     const param = new HttpParams({});
     const params = new HttpParams().set('crnno', crnno).set('clientcode',clientcode);
@@ -505,6 +547,19 @@ export class TicketService {
   }
 
 
+  public  UpdateTicketStatus(ticketno:string)
+  {
+    
+    let url= environment.apiEndpoint +"Ticket/UpdateTicketStatus";
+
+    const param = new HttpParams({});
+    const params = new HttpParams().set('ticketno', ticketno);
+       
+    return this.http.get<any>(url, {params}).pipe(tap(data => data),
+              catchError(this.handleError)
+              );
+  }
+
   public  UpdateTicketAccept(objlst:ticketmdoel[])
   {
     let url= environment.apiEndpoint +"Ticket/UpdateTicketAccept";
@@ -513,6 +568,17 @@ export class TicketService {
               catchError(this.handleError)
               );
   }
+
+  DeleteTicketAll(objlst:ticketmdoel[])
+  {
+    let url= environment.apiEndpoint +"Ticket/DeleteTicketAll";
+
+    return this.http.put<any>(url, objlst).pipe(tap(data => data),
+              catchError(this.handleError)
+              );
+  }
+
+
   private handleError(error: HttpErrorResponse) {
     console.log(error.error.message);
     if (error.error instanceof ErrorEvent) {

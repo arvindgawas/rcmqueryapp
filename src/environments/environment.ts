@@ -4,8 +4,11 @@
 
 export const environment = {
   production: false,
+  //apiEndpoint:"http://rcmquerylive.cms.com/rcmquery/api/"
+  //apiEndpoint: "http://172.19.8.26/rcmquery/api/"
   apiEndpoint: 'http://localhost:4599/api/'
 };
+
 
 /*
  * For easier debugging in development mode, you can import the following file
